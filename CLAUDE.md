@@ -13,11 +13,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | File | Purpose |
 |------|---------|
 | `public/intro.md` | Player-facing premise text — uses pre-1918 archaic Russian orthography intentionally |
-| `public/Роли.md` | Public character list players use to choose roles - updated automatically from Персонажи.md |
 | `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players |
-| `public/Таинственное.md` | Rules for the alien contact/possession mechanic - updated automatically from Пришельцы.md |
+| `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
+| `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
+| `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
+| `инструкции_по_генерации.md` | Rules for the automatic creation of public documents from GM references |
 | `Персонажи.md` | GM reference: full character sheets with mechanics, objectives, resources |
 | `Пришельцы.md` | GM reference: full aliens specification |
+| `Механики.md` | GM reference: game mechanics |
+| `Динамика.md` | GM reference: possible game paths, pace (time control), resource balance, guide for GM interference and input events |
 | `черновики/опрос.md` | Player comfort/consent survey |
 | `черновики/Марица взаимодействий.xlsx` | Character relationship/interaction matrix |
 
