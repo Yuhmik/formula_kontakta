@@ -22,6 +22,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | `Пришельцы.md` | GM reference: full aliens specification |
 | `Механики.md` | GM reference: game mechanics |
 | `Динамика.md` | GM reference: possible game paths, pace (time control), resource balance, guide for GM interference and input events |
+| `Корреспонденция.md` | GM reference: all incoming and outgoing letters — player Поручения, GM event letters, interception potential and outcomes |
+| `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. |
 | `черновики/опрос.md` | Player comfort/consent survey |
 | `черновики/Марица взаимодействий.xlsx` | Character relationship/interaction matrix |
 
