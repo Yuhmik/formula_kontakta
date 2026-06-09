@@ -18,10 +18,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
 | `инструкции_по_генерации.md` | Rules for the automatic creation of public documents from GM references |
-| `Персонажи.md` | GM reference: full character sheets with mechanics, objectives, resources |
+| `Персонажи.md` | GM reference: Full character descriptions: source for the three output types — public role list (PUB_INFO blocks), personal player cards (untagged text), GM-only notes (GM_INFO blocks). Tag system: `PUB_INFO`/`PUB_END`, `GM_INFO`/`GM_END`, untagged = player card |
 | `Пришельцы.md` | GM reference: full aliens specification |
-| `Механики.md` | GM reference: game mechanics |
-| `Динамика.md` | GM reference: possible game paths, pace (time control), resource balance, guide for GM interference and input events |
+| `Механики.md` | GM reference: strictly-defined game rules — each mechanic has explicit trigger conditions and outcomes. What the GM executes as a rule, not as a judgment call |
+| `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
 | `Корреспонденция.md` | GM reference: all incoming and outgoing letters — player Поручения, GM event letters, interception potential and outcomes |
 | `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. |
 | `черновики/опрос.md` | Player comfort/consent survey |
