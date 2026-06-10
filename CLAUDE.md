@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Never use em dash (—) in any texts. Use en dash (–) instead.
+
 ## Project
 
 "Формула контакта" — live-action roleplay (LARP), 2-day cottage-hosted event for 10–20 players. Small organizing team (2–4 people). All materials are in Russian; this is a creative writing / game-design project, not a software project. There are no build, test, or lint commands.
