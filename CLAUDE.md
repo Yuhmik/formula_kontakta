@@ -25,6 +25,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `Механики.md` | GM reference: strictly-defined game rules — each mechanic has explicit trigger conditions and outcomes. What the GM executes as a rule, not as a judgment call |
 | `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
 | `Корреспонденция.md` | GM reference: all incoming and outgoing letters — player Поручения, GM event letters, interception potential and outcomes |
+| `Записки.md` | GM tool: optional "morning notes" for players — inner monologue fragments offered at the start of each raout to players who need direction. 2–3 notes per character, psychology-focused, not event-specific. |
 | `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. |
 | `черновики/опрос.md` | Player comfort/consent survey |
 | `черновики/Марица взаимодействий.xlsx` | Character relationship/interaction matrix |
