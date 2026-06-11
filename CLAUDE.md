@@ -14,8 +14,8 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 
 | File | Purpose |
 |------|---------|
-| `public/intro.md` | Player-facing premise text — uses pre-1918 archaic Russian orthography intentionally |
-| `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players |
+| `public/intro.md` | Player-facing premise text |
+| `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
 | `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
 | `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
@@ -30,13 +30,15 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `черновики/опрос.md` | Player comfort/consent survey |
 | `черновики/Марица взаимодействий.xlsx` | Character relationship/interaction matrix |
 
-Directories: `public/` — all public documents for players; `материалы/` — research, visual assets and sound files; `черновики/` — draft documents.
+Directories: `public/` — all public documents for players; `public/exposition/` — pre-play publications for atmosphere building; `материалы/` — research, visual assets and sound files (look at it for historical references!); `черновики/` — draft documents. Ready-to-publication texts from `материалы/` goes to `public/exposition/`.
+
 
 ## Language rules
 
 - All materials are written in **modern Russian** spelling.
-- **Exception: `intro.md` only** uses pre-1918 archaic orthography (е → ѣ, etc.) for deliberate period atmosphere. Do not "correct" these spellings — they are intentional.
-- When editing `intro.md`, preserve the archaic orthography throughout.
+
+Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for deliberate period atmosphere. Do not "correct" these spellings — they are intentional, preserve the archaic orthography throughout.
+
 
 ## Character sheet format (Персонажи.md)
 
@@ -48,14 +50,16 @@ Each character entry follows this structure:
 
 When adding or editing a character, keep all these fields. `Персонажи.md` is full characters info for GM and is a source for auto-generated public `Список ролей.md` and personal character sheet for each player.
 
+
 ## Alien contact mechanic (core design)
 
 Defined in `Пришельцы.md`. Key constraints to respect when writing related content:
 - Aliens inhabit local animals, marked with ribbons
 - Aliens can briefly take control of a human's mind (with ethical limits built into their nature)
 - The controlled human has partial or full memory loss afterward
-- Aliens need fuel: either 5 barrels of oil or spirit, or a safe high-altitude launch point
+- Aliens need fuel: 5 barrels of a single liquid – oil or spirit, never mixed (the two paths do not add up) – or a safe high-altitude launch point
 - This mechanic creates unreliable narration and dual-role play for "possessed" characters
+
 
 ## Historical period
 
