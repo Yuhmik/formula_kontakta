@@ -22,6 +22,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `инструкции_по_генерации.md` | Rules for the automatic creation of public documents from GM references |
 | `Персонажи.md` | GM reference: Full character descriptions: source for the three output types — public role list (PUB_INFO blocks), personal player cards (untagged text), GM-only notes (GM_INFO blocks). Tag system: `PUB_INFO`/`PUB_END`, `GM_INFO`/`GM_END`, untagged = player card |
 | `Игроки.md` | GM reference: player applications |
+| `АХЧ.md` | GM reference: material things to prepare |
 | `Пришельцы.md` | GM reference: full aliens specification |
 | `Механики.md` | GM reference: strictly-defined game rules — each mechanic has explicit trigger conditions and outcomes. What the GM executes as a rule, not as a judgment call |
 | `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
