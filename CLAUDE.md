@@ -6,7 +6,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 
 ## Project
 
-"Формула контакта" — live-action roleplay (LARP), 2-day cottage-hosted event for 10–20 players. Small organizing team (2–4 people). All materials are in Russian; this is a creative writing / game-design project, not a software project. There are no build, test, or lint commands.
+"Формула контакта" — live-action roleplay (LARP), 2-day cottage-hosted event for 10–20 players. Small organizing team (2–4 people). All materials are in Russian; this is a creative writing / game-design project, not a software project. There are no build, test, or lint commands, only a few `.claude/skills` to generate content derived from master files.
 
 **Premise:** 1835, a rural Russian estate. An alien spacecraft makes an emergency landing; the aliens hide in local animals while the gentry investigates what they believe to be supernatural events. Players on both sides manage their goals without initially understanding each other.
 
@@ -14,25 +14,35 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 
 | File | Purpose |
 |------|---------|
-| `public/intro.md` | Player-facing premise text |
-| `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
-| `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
-| `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
-| `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
-| `инструкции_по_генерации.md` | Rules for the automatic creation of public documents from GM references |
-| `Персонажи.md` | GM reference: Full character descriptions: source for the three output types — public role list (PUB_INFO blocks), personal player cards (untagged text), GM-only notes (GM_INFO blocks). Tag system: `PUB_INFO`/`PUB_END`, `GM_INFO`/`GM_END`, untagged = player card |
+| `Персонажи.md` | GM reference: Full character descriptions: source for the three output types — public role list (PUB_INFO blocks), personal player cards (untagged text), GM-only notes (GM_INFO blocks). Tag system: `PUB_INFO`/`PUB_END`, `GM_INFO`/`GM_END`, untagged = personal player card |
 | `Игроки.md` | GM reference: player applications |
 | `АХЧ.md` | GM reference: material things to prepare |
 | `Пришельцы.md` | GM reference: full aliens specification |
 | `Механики.md` | GM reference: strictly-defined game rules — each mechanic has explicit trigger conditions and outcomes. What the GM executes as a rule, not as a judgment call |
-| `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
 | `Корреспонденция.md` | GM reference: all incoming and outgoing letters — player Поручения, GM event letters, interception potential and outcomes |
 | `Записки.md` | GM tool: optional "morning notes" for players — inner monologue fragments offered at the start of each raout to players who need direction. 2–3 notes per character, psychology-focused, not event-specific. |
+| `инструкции_по_генерации.md` | Rules for the automatic creation of public documents from GM references |
+| `public/intro.md` | Player-facing premise text |
+| `материалы/графика/персонажи/портреты.md` | Character portraits (internet links to images of paintures, with attributions) |
+| `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
+| `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
+| `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
+| `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. |
-| `черновики/опрос.md` | Player comfort/consent survey |
-| `черновики/Марица взаимодействий.xlsx` | Character relationship/interaction matrix |
+| `public/Медицина.md` | Player-facing mechanic card for the medicine mechanic |
+| `public/characters/` | Player card files — one per character, generated from untagged text in Персонажи.md |
+| `public/игротехам/` | Reference materials for game technicians and location GMs |
+| `public/графика/` | Published images (banners, posters, and other visual assets) |
+| `public/ассигнации/` | In-game banknotes for printing |
+| `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
+| `Мастерский_лист.md` | GM tool: game-flow control sheet for the main-location GM |
 
-Directories: `public/` — all public documents for players; `public/exposition/` — pre-play publications for atmosphere building; `материалы/` — research, visual assets and sound files (look at it for historical references!); `черновики/` — draft documents. Ready-to-publication texts from `материалы/` goes to `public/exposition/`.
+Directories:
+- `public/` — all public documents for players
+- `public/exposition/` — pre-play publications for atmosphere building
+- `материалы/` — research, visual assets and sound files (look at it for historical references!)
+- `черновики/` — draft documents
+Ready-to-publication texts from `материалы/` goes to `public/exposition/`.
 
 
 ## Language rules
@@ -47,7 +57,7 @@ Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for de
 Each character entry follows this structure:
 - Brief biography and personality
 - (optional) **Деньги:** X — monetary resources available
-- (optional) **Поручения (действия):** — list of mechanical actions the character can perform during the LARP
+- (optional) **Раздатка:** — printed materials for each player; includes application forms for mechanical actions the character can perform during the LARP
 - Goals, motivations, relationships, and moral dilemmas
 
 When adding or editing a character, keep all these fields. `Персонажи.md` is full characters info for GM and is a source for auto-generated public `Список ролей.md` and personal character sheet for each player.
