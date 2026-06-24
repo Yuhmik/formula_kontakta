@@ -62,6 +62,22 @@ Each character entry follows this structure:
 
 When adding or editing a character, keep all these fields. `Персонажи.md` is full characters info for GM and is a source for auto-generated public `Список ролей.md` and personal character sheet for each player.
 
+## Gender system
+
+Three distinct mechanisms exist — keep them separate in analysis:
+
+**1. Кросспол ("Кросспол уместен" / "Кросспол ожидается")**
+The player's real-world gender does not need to match the character's gender. The character stays exactly as written in the fiction. When analysing in-fiction events (who can be recruited, who is suspected, who falls in love with whom), use the **character's** gender, not the player's.
+- "Кросспол уместен": Горихвостов, Свербеев, Доложейко, Пирогов, Фишнер, Строганов-ст., Строганов-мл., Валемонте, Раскольниченко
+- "Кросспол ожидается": Чарторыжский — canonically a woman passing as a man; crossplay is the design intent, not optional.
+
+**2. Гендер персонажа можно инвертировать**
+The **character's** written gender can be changed to match the player's preference on request. When this happens, pronouns, relationships, and `GENDER_RULE` blocks change accordingly.
+Currently invertible: Горихвостов, Строганов-ст., Строганов-мл., Валемонте, Раскольниченко, Ласневская.
+
+**3. GENDER_RULE blocks**
+`GENDER_RULE(condition)` / `GENDER_END` blocks in `Персонажи.md` contain conditional text that activates only for a specific gender combination of characters. condition could contain one character name (mind gender variations of feminine/masculine Russian names) with gender marker (e.g. `Строганова-младшая - Ж`), or logical cobination with `and` or `or` (e.g. `Строганов-младший - М and Раскольниченко - Ж`). Flag these when relevant to plot or romance analysis.
+
 
 ## Alien contact mechanic (core design)
 
