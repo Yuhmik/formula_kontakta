@@ -36,6 +36,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/ассигнации/` | In-game banknotes for printing |
 | `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
 | `Мастерский_лист.md` | GM tool: game-flow control sheet for the main-location GM |
+| `Построение_атмосферы.md` | GM reference: series plan for pre-game atmosphere publications — topics, principles, character connections, movie references, and discussion notes for the `public/exposition/` cycle |
 
 Directories:
 - `public/` — all public documents for players
