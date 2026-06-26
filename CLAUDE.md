@@ -25,6 +25,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/intro.md` | Player-facing premise text |
 | `материалы/графика/персонажи/портреты.md` | Character portraits (internet links to images of paintures, with attributions) |
 | `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
+| `public/Открытые_механики.md` | Player-facing general mechanics reference: rauts schedule, commissions, free actions, letters, abilities, morning notes, Emotional Compass concept, etc. Written manually. |
 | `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
 | `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
@@ -57,6 +58,7 @@ Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for de
 
 Each character entry follows this structure:
 - Brief biography and personality
+- **Эмоциональный компас** — core emotional need/fear (Ядро), what draws the character (Притяжение), what repels them (Отталкивание); 2–4 sentences, appears in the player card
 - (optional) **Деньги:** X — monetary resources available
 - (optional) **Раздатка:** — printed materials for each player; includes application forms for mechanical actions the character can perform during the LARP
 - Goals, motivations, relationships, and moral dilemmas
