@@ -85,7 +85,7 @@ Currently invertible: Горихвостов, Строганов-ст., Стро
 ## Alien contact mechanic (core design)
 
 Defined in `Пришельцы.md`. Key constraints to respect when writing related content:
-- Aliens inhabit local animals, marked with ribbons
+- Aliens inhabit local animals; **ribbons (ленточки) are out-of-game technical markers** for players/GMs only – characters in the fiction do not see or perceive them, they only notice the animals' strange behaviour
 - Aliens can briefly take control of a human's mind (with ethical limits built into their nature)
 - The controlled human has partial or full memory loss afterward
 - Aliens need fuel: 5 barrels of a single liquid – oil or spirit, never mixed (the two paths do not add up) – or a safe high-altitude launch point
