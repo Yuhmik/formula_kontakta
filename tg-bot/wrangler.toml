@@ -1,0 +1,12 @@
+name = "formula-kontakta-bot"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Секреты (TG_TOKEN и GEMINI_KEY) задаются через CLI, не здесь:
+# wrangler secret put TG_TOKEN
+# wrangler secret put GEMINI_KEY
+
+# Если захочешь персистентные сессии через KV — раскомментируй:
+# [[kv_namespaces]]
+# binding = "SESSIONS"
+# id = "ВАШ_KV_NAMESPACE_ID"
