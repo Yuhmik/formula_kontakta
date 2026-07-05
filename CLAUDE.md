@@ -6,7 +6,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 
 ## Project
 
-"Формула контакта" — live-action roleplay (LARP), 2-day cottage-hosted event for 10–20 players. Small organizing team (2–4 people). All materials are in Russian; this is a creative writing / game-design project, not a software project. There are no build, test, or lint commands, only a few `.claude/skills` to generate content derived from master files.
+"Формула контакта" — live-action roleplay (LARP), 2-day cottage-hosted event for 17 players (+2 playing masters, +1 master assistant). Small organizing team (2–4 people). All materials are in Russian; this is a creative writing / game-design project, not a software project. There are no build, test, or lint commands, only a few `.claude/skills` to generate content derived from master files.
 
 **Premise:** 1835, a rural Russian estate. An alien spacecraft makes an emergency landing; the aliens hide in local animals while the gentry investigates what they believe to be supernatural events. Players on both sides manage their goals without initially understanding each other.
 
@@ -29,7 +29,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
 | `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
-| `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. |
+| `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. Ефросинья's `Видение_*` files are a special case: short (3–5 sentences) first-person manic-episode outbursts giving strong emotion plus plot-trigger facts, not scenes to memorize — see existing files for tone. |
 | `public/Медицина.md` | Player-facing mechanic card for the medicine mechanic |
 | `public/characters/` | Player card files — one per character, generated from untagged text in Персонажи.md |
 | `public/игротехам/` | Reference materials for game technicians and location GMs |
@@ -50,6 +50,7 @@ Ready-to-publication texts from `материалы/` goes to `public/exposition
 ## Language rules
 
 - All materials are written in **modern Russian** spelling.
+- For `public/exposition/` files, prefer flowing, connected prose over short fragmented sentences — clipped one/two-sentence paragraphs read as artificial ("AI-generated"). Write in smooth periods with natural transitions between thoughts, except where a character's voice specifically calls for a punchier register (e.g. Ефросинья's `Видение_*` letters, see above).
 
 Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for deliberate period atmosphere. Do not "correct" these spellings — they are intentional, preserve the archaic orthography throughout.
 
