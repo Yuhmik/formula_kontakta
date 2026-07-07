@@ -25,7 +25,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/intro.md` | Player-facing premise text |
 | `материалы/графика/персонажи/портреты.md` | Character portraits (internet links to images of paintures, with attributions) |
 | `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
-| `public/Открытые_механики.md` | Player-facing general mechanics reference: rauts schedule, commissions, free actions, letters, abilities, morning notes, Emotional Compass concept, etc. Written manually. |
+| `public/Открытые_механики.md` | Player-facing general mechanics reference: rauts schedule, commissions, free actions, letters, abilities, morning notes, safety conventions (physical/emotional interactions), police and weapons, etc. Written manually. |
 | `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
 | `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
@@ -44,6 +44,7 @@ Directories:
 - `public/exposition/` — pre-play publications for atmosphere building
 - `материалы/` — research, visual assets and sound files (look at it for historical references!)
 - `черновики/` — draft documents
+- `tg-bot/` — Telegram bot for players. Files here (notably `game-knowledge.js`) are NOT an authoritative source of game information — the master files above are. But they must be kept in sync: when game materials change, update `tg-bot/game-knowledge.js` accordingly.
 Ready-to-publication texts from `материалы/` goes to `public/exposition/`.
 
 
@@ -58,11 +59,16 @@ Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for de
 ## Character sheet format (Персонажи.md)
 
 Each character entry follows this structure:
-- Brief biography and personality
-- **Эмоциональный компас** — core emotional need/fear (Ядро), what draws the character (Притяжение), what repels them (Отталкивание); 2–4 sentences, appears in the player card
-- (optional) **Деньги:** X — monetary resources available
-- (optional) **Раздатка:** — printed materials for each player; includes application forms for mechanical actions the character can perform during the LARP
-- Goals, motivations, relationships, and moral dilemmas
+- `## Имя` heading, followed by two subtitle lines (role/relation, then age) with no labels
+- `PUB_INFO`/`PUB_END` block – short public teaser: 2–3 sentences of description plus a sentence on what the character faces during the game; ends with crosspol/gender-invert notes when applicable
+- (optional) `GM_INFO`/`GM_END` block right after PUB_END – casting notes, references, why the role matters (not shown to players)
+- Free-form biography: goals, motivations, relationships, moral dilemmas; may contain `GENDER_RULE(condition)`/`GENDER_END` blocks for text conditional on another character's gender in that run
+- (optional) **Деньги:** X – monetary resources available
+- (optional) **Раздатка:** – printed materials for the player; list items, may include mechanical-action application forms or `CARD_BEGIN(имя, путь/)`/`CARD_END` blocks (wrapped in `GM_INFO`/`GM_END` since the card is generated separately, not shown inline)
+- (optional) `GM_INFO`/`GM_END` block with **Материалы в процессе игры:** – GM-only notes on which follow-up materials to hand out and when
+- **Костюм (в идеале):** – costuming guidance (plural **Костюмы:** for characters covering multiple people, e.g. location masters)
+- **Питомец (для примера):** – example animal for the alien-possession mechanic; illustrative, not mandatory
+- (optional) **Реквизит:** – special props needed for the role (e.g. conjurer's tricks)
 
 When adding or editing a character, keep all these fields. `Персонажи.md` is full characters info for GM and is a source for auto-generated public `Список ролей.md` and personal character sheet for each player.
 
