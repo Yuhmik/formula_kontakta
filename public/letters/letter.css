@@ -9,7 +9,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   background: #f4ecd8;
 }
 
@@ -64,6 +65,13 @@ h1 {
   font-size: 11pt;
 }
 
+.marking {
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 4mm;
+}
+
 p {
   text-align: justify;
   text-indent: 8mm;
@@ -76,11 +84,18 @@ p.no-indent {
 }
 
 ol {
-  margin: 1.5mm 0 2.5mm 10mm;
+  margin: 1.5mm 0 2.5mm 0mm;
   padding-left: 5mm;
 }
 
-ol li {
+ul {
+  margin: 1.5mm 0 2.5mm 0mm;
+  padding-left: 5mm;
+  list-style-type: "– ";
+}
+
+ol li,
+ul li {
   text-align: justify;
   margin-bottom: 1.5mm;
   padding-left: 2mm;
@@ -119,6 +134,13 @@ ol li {
   font-style: italic;
 }
 
+.signatures .name img {
+  height: 18mm;
+  width: auto;
+  display: block;
+  margin: 0.5mm 0;
+}
+
 .signature {
   margin-top: 5mm;
   text-align: right;
@@ -142,10 +164,29 @@ ol li {
   height: 1em;
 }
 
+.date-line .name img {
+  height: 18mm;
+  width: auto;
+}
+
+.date-line.seal-only {
+  justify-content: flex-end;
+}
+
+.seal img {
+  width: 52mm;
+  height: auto;
+  opacity: 0.82;
+  mix-blend-mode: multiply;
+}
+
 @media print {
-  html, body {
+
+  html,
+  body {
     background: #fff;
   }
+
   .page {
     background: transparent;
     margin: 0;
@@ -157,6 +198,7 @@ ol li {
     padding: 10mm 0;
     background: #d8cdb4;
   }
+
   .page {
     box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3);
   }
