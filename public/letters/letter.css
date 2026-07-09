@@ -1,0 +1,163 @@
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background: #f4ecd8;
+}
+
+body {
+  font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  color: #2b2013;
+  font-size: 11pt;
+  line-height: 1.32;
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  padding: 12mm 18mm 10mm 18mm;
+  background: #f4ecd8;
+  overflow: hidden;
+}
+
+.emblem {
+  text-align: center;
+  margin-bottom: 3mm;
+}
+
+.emblem img {
+  height: 24mm;
+  max-width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 12.5pt;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  margin-bottom: 3mm;
+  text-transform: uppercase;
+}
+
+.rule {
+  border: none;
+  border-top: 0.8pt solid #5a4a2f;
+  width: 42mm;
+  margin: 0 auto 3mm auto;
+}
+
+.addressee {
+  text-align: center;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 3.5mm;
+  font-size: 11pt;
+}
+
+p {
+  text-align: justify;
+  text-indent: 8mm;
+  margin-bottom: 2mm;
+  hyphens: auto;
+}
+
+p.no-indent {
+  text-indent: 0;
+}
+
+ol {
+  margin: 1.5mm 0 2.5mm 10mm;
+  padding-left: 5mm;
+}
+
+ol li {
+  text-align: justify;
+  margin-bottom: 1.5mm;
+  padding-left: 2mm;
+  hyphens: auto;
+}
+
+.doc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 10pt;
+  margin-bottom: 3mm;
+}
+
+.doc-head .seal-note {
+  font-style: italic;
+}
+
+.salutation {
+  text-indent: 0;
+  font-weight: 700;
+  margin-bottom: 2.5mm;
+}
+
+.signatures {
+  margin-top: 5mm;
+}
+
+.signatures p {
+  text-align: left;
+  text-indent: 0;
+  margin-bottom: 1.5mm;
+}
+
+.signatures .name {
+  font-style: italic;
+}
+
+.signature {
+  margin-top: 5mm;
+  text-align: right;
+  font-style: italic;
+  font-size: 11.5pt;
+  text-indent: 0;
+}
+
+.date-line {
+  margin-top: 6mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 10pt;
+}
+
+.date-line .blank {
+  display: inline-block;
+  border-bottom: 0.6pt solid #5a4a2f;
+  width: 45mm;
+  height: 1em;
+}
+
+@media print {
+  html, body {
+    background: #fff;
+  }
+  .page {
+    background: transparent;
+    margin: 0;
+  }
+}
+
+@media screen {
+  body {
+    padding: 10mm 0;
+    background: #d8cdb4;
+  }
+  .page {
+    box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3);
+  }
+}
