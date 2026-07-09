@@ -1,3 +1,5 @@
+<!-- original -->
+
 # Формула Контакта — Telegram Bot
 
 Cloudflare Worker, который отвечает игрокам на вопросы об игре через Google Gemini (бесплатный тир).

@@ -233,6 +233,11 @@ foreach ($file in $sourceFiles) {
             }
         }
 
+        # Origin marker – first line of every generated file (see инструкции_по_генерации.md)
+        $hdr = '<!-- generated from `' + $file.Name + '` CARD "' + $origName + '" -->'
+        $nl  = if ($body -match "`r`n") { "`r`n" } else { "`n" }
+        $body = $hdr + $nl + $nl + $body
+
         $outDir = Join-Path $root $dir
         if (-not (Test-Path $outDir)) { New-Item -ItemType Directory -Force $outDir | Out-Null }
 

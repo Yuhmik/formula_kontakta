@@ -20,3 +20,9 @@ Read these files in full:
 ## Step 3 – Generate and write
 
 Apply all rules from `инструкции_по_генерации.md` and write the result to `public/Роли.md`.
+
+The first line of the output must be the origin marker, followed by an empty line:
+
+```
+<!-- generated from `Персонажи.md` -->
+```
