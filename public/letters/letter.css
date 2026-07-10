@@ -51,6 +51,17 @@ body {
   max-width: 100%;
 }
 
+.letterhead {
+  text-align: center;
+  margin-bottom: 5mm;
+}
+
+.letterhead img {
+  width: 100%;
+  max-width: 190mm;
+  height: auto;
+}
+
 h1 {
   text-align: center;
   font-weight: 700;
@@ -367,7 +378,7 @@ ul li {
 }
 
 @media screen {
-  .page + .page {
+  .page+.page {
     margin-top: 8mm;
   }
 
