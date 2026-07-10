@@ -22,6 +22,7 @@ body {
 }
 
 .page {
+  position: relative;
   width: 210mm;
   height: 297mm;
   margin: 0 auto;
@@ -54,6 +55,21 @@ h1 {
   border: none;
   border-top: 0.8pt solid #5a4a2f;
   width: 42mm;
+  margin: 0 auto 3mm auto;
+}
+
+.rule-vignette {
+  text-align: center;
+  font-size: 15pt;
+  color: #5a4a2f;
+  letter-spacing: 0.5em;
+  margin: 0 0 3mm 0;
+}
+
+.rule-img {
+  display: block;
+  height: 5mm;
+  width: auto;
   margin: 0 auto 3mm auto;
 }
 
@@ -178,6 +194,19 @@ ul li {
   height: auto;
   opacity: 0.82;
   mix-blend-mode: multiply;
+}
+
+.marginalia {
+  position: absolute;
+  top: 22mm;
+  left: 16mm;
+  width: 62mm;
+  font-family: "Caveat", cursive;
+  font-size: 17pt;
+  line-height: 1.15;
+  color: #35408a;
+  text-align: left;
+  transform: rotate(-7deg);
 }
 
 @media print {
