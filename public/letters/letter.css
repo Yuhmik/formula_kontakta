@@ -271,6 +271,39 @@ ul li {
   margin-left: 4mm;
 }
 
+.cut-label {
+  text-align: center;
+  text-indent: 0;
+  font-size: 9pt;
+  letter-spacing: 0.25em;
+  color: #8a7a5f;
+  margin-top: 1mm;
+}
+
+.envelope-label {
+  width: 100mm;
+  max-width: 100mm;
+  margin: 10mm auto;
+  padding: 6mm 8mm;
+  border: 0.8pt solid #5a4a2f;
+}
+
+.envelope-label .envelope-addressee {
+  font-size: 14pt;
+  font-weight: 700;
+  text-indent: 0;
+  text-align: left;
+  line-height: 1.5;
+  margin-bottom: 4mm;
+}
+
+.envelope-label .envelope-place {
+  font-size: 12.5pt;
+  text-indent: 0;
+  text-align: left;
+  line-height: 1.5;
+}
+
 .gm-block {
   font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   font-size: 9.5pt;
