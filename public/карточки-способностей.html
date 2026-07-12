@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <title>Карточки способностей: Откровенность, Красноречие, Обольщение</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      background: #f4ecd8;
+    }
+
+    body {
+      font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      color: #2b2013;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 88mm;
+      gap: 4mm;
+    }
+
+    .card {
+      border: 1pt dashed #8a7a5f;
+      padding: 4mm 4.5mm;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .card.sticker {
+      background: rgba(138, 122, 95, 0.08);
+    }
+
+    .card h2 {
+      font-size: 9.5pt;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 0.6pt solid #8a7a5f;
+      padding-bottom: 1.5mm;
+      margin-bottom: 2.5mm;
+    }
+
+    .card .kind {
+      display: block;
+      font-size: 7.5pt;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      font-style: italic;
+      color: #5a4a2f;
+    }
+
+    .card p {
+      font-size: 10.5pt;
+      line-height: 1.3;
+      text-align: left;
+      hyphens: auto;
+    }
+
+    @media print {
+
+      html,
+      body {
+        background: #fff;
+      }
+
+      .card.sticker {
+        background: rgba(138, 122, 95, 0.08);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @media screen {
+      body {
+        padding: 10mm;
+      }
+
+      .grid.back {
+        margin-top: 10mm;
+      }
+    }
+
+    .grid.back {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .img-cell {
+      border: 1pt dashed #8a7a5f;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-cell img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Откровенность</h2>
+      <p>Вы до глубины души тронуты откровенностью собеседницы и её расположением к вам, и вам очень хочется
+        искренне рассказать ей свой самый большой секрет. Что-то важное, не просто байку из склепа.</p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос
+        разума или страха пересилит это желание, но не без борьбы. А может и не пересилит. Отыграйте это. Записку
+        уничтожьте.</p>
+    </div>
+
+    <div class="card">
+      <h2>Откровенность</h2>
+      <p>Вы до глубины души тронуты откровенностью собеседницы и её расположением к вам, и вам очень хочется
+        искренне рассказать ей свой самый большой секрет. Что-то важное, не просто байку из склепа.</p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос
+        разума или страха пересилит это желание, но не без борьбы. А может и не пересилит. Отыграйте это. Записку
+        уничтожьте.</p>
+    </div>
+
+    <div class="card sticker">
+      <h2>Откровенность</h2>
+      <p>Вы обладаете особой способностью: откровенность. Во время разговора отдайте собеседнику карточку из этого
+        конверта, и ему очень захочется
+        поделиться с вами своим секретом.</p>
+    </div>
+
+    <div class="card">
+      <h2>Красноречие</h2>
+      <p>Вы впечатлены красноречием собеседника. Его предложение кажется вам весьма привлекательным. Вам хочется с
+        ним согласиться.</p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос разума или страха пересилит это желание, но не без борьбы. А может и не
+        пересилит. Отыграйте это. Записку уничтожьте.</p>
+    </div>
+
+    <div class="card">
+      <h2>Красноречие</h2>
+      <p>Вы впечатлены красноречием собеседника. Его предложение кажется вам весьма привлекательным. Вам хочется с
+        ним согласиться.</p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос разума или страха пересилит это желание, но не без борьбы. А может и не
+        пересилит. Отыграйте это. Записку уничтожьте.</p>
+    </div>
+
+    <div class="card sticker">
+      <h2>Красноречие</h2>
+      <p>Вы обладаете особой способностью: красноречие. Отдайте собеседнику карточку из этого конверта, и ему очень
+        захочется исполнить вашу просьбу.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Обольщение</h2>
+      <p>На вас действуют чары этой обворожительной дамы. Вам очень хочется угодить ей, исполнить любую её просьбу.
+      </p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос разума или страха пересилит это желание, но не без борьбы. А может и не пересилит. Отыграйте
+        это. Записку уничтожьте.</p>
+    </div>
+
+    <div class="card">
+      <h2>Обольщение</h2>
+      <p>На вас действуют чары этой обворожительной дамы. Вам очень хочется угодить ей, исполнить любую её просьбу.
+      </p>
+      <p>&nbsp;</p>
+      <p>Возможно, голос разума или страха пересилит это желание, но не без борьбы. А может и не пересилит. Отыграйте
+        это. Записку уничтожьте.</p>
+    </div>
+
+    <div class="card sticker">
+      <h2>Обольщение</h2>
+      <p>Вы обладаете особой способностью: обольщение. Отдайте собеседнику карточку из этого конверта, и мужчине очень
+        захочется исполнить вашу
+        просьбу. А может и не только мужчине. Или не только просьбу.</p>
+    </div>
+
+  </div>
+
+  <!-- Обратная сторона листа при двусторонней печати (переворот по длинному краю - стандарт для
+       книжной ориентации): порядок колонок зеркален относительно первой страницы, чтобы картинки
+       попали на карточки, а не на наклейки (третья колонка на первой странице). -->
+  <div class="grid back">
+
+    <div class="blank-cell"></div>
+    <div class="img-cell"><img src="графика/откровенность.png" alt=""></div>
+    <div class="img-cell"><img src="графика/откровенность.png" alt=""></div>
+
+    <div class="blank-cell"></div>
+    <div class="img-cell"><img src="графика/красноречие.png" alt=""></div>
+    <div class="img-cell"><img src="графика/красноречие.png" alt=""></div>
+
+    <div class="blank-cell"></div>
+    <div class="img-cell"><img src="графика/обольщение.png" alt=""></div>
+    <div class="img-cell"><img src="графика/обольщение.png" alt=""></div>
+
+  </div>
+</body>
+
+</html>
