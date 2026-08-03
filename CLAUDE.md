@@ -66,8 +66,8 @@ Each character entry follows this structure:
 - (optional) `GM_INFO`/`GM_END` block right after PUB_END – casting notes, references, why the role matters (not shown to players)
 - Free-form biography: goals, motivations, relationships, moral dilemmas; may contain `GENDER_RULE(condition)`/`GENDER_END` blocks for text conditional on another character's gender in that run
 - (optional) **Деньги:** X – monetary resources available
-- (optional) **Раздатка:** – printed materials for the player; list items, may include mechanical-action application forms or `CARD_BEGIN(имя, путь/)`/`CARD_END` blocks (wrapped in `GM_INFO`/`GM_END` since the card is generated separately, not shown inline)
-- (optional) `GM_INFO`/`GM_END` block with **Материалы в процессе игры:** – GM-only notes on which follow-up materials to hand out and when
+- (optional) **Раздатка:** – printed materials and game items for the player
+- (optional) **Материалы в процессе игры:** – GM-only notes on which follow-up materials to hand out and when
 - **Костюм (в идеале):** – costuming guidance (plural **Костюмы:** for characters covering multiple people, e.g. location masters)
 - **Питомец (для примера):** – example animal for the alien-possession mechanic; illustrative, not mandatory
 - (optional) **Реквизит:** – special props needed for the role (e.g. conjurer's tricks)
