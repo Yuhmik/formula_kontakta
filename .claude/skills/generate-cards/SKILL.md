@@ -10,7 +10,7 @@ Extract all `CARD_BEGIN(Name, path/, style[, copies[, columns]]) … CARD_END` b
 - `handwritten` – the same in-universe artifact, but handwritten (Caveat script): a character's draft, journal, or observation notes.
 - `reference` – a meta-text addressed to the player, игротехник, or GM as a real person, not to the character. Nothing rendered as `reference` exists inside the game world – it's rules/procedure, not fiction, so it carries no period styling: clean tables and lists, readable on screen or print.
 
-`copies` (optional, default 1) repeats the same card `copies` times in a grid on the page, each copy boxed in a pale dashed cut line, for printing one sheet and cutting it into several identical copies (short notes handed to multiple players). Text sits 1cm from the cut line and 1cm from the paper edge either way. If more copies are requested than fit on one sheet, the grid simply continues onto the next printed page.
+`copies` (optional, default 1) repeats the same card `copies` times in a grid on the page, for printing one sheet and cutting it into several identical copies (short notes handed to multiple players). Copies are separated by shared dashed cut lines (not a box around each copy) – a single line between each pair of neighboring copies, crossing into a "+" wherever a row division meets a column division. Text sits 1cm from every cut line and 1cm from the paper edge, the same distance on every side. If more copies are requested than fit on one sheet, the grid simply continues onto the next printed page.
 
 `columns` (optional, default 2, only meaningful when `copies` > 1) sets how many columns the grid uses. Short notes read fine at 2; a longer card (several paragraphs) usually needs `columns=1` so each copy has the full page width – set it explicitly per card, there's no automatic detection by text length.
 
@@ -473,12 +473,24 @@ em { font-style: italic; }
 '@
 
 # When `copies` > 1, the single instance is repeated in a `columns`-wide grid on the page so
-# the sheet can be printed once and cut into several identical copies. Each cell gets its own
-# dashed border as the cut guide; cell padding and the page's own padding are both 10mm, so
-# the text sits exactly 1cm from the cut line and 1cm from the paper edge (same margin either
-# way, as requested). Cut color matches each style's existing dashed-line tone.
+# the sheet can be printed once and cut into several identical copies. Neighboring copies share
+# a single dashed cut line (border-right/border-bottom on every cell, with gap: 0 so the lines
+# touch) instead of each cell drawing its own independent box - this is what makes interior cut
+# lines cross into a "+" wherever a row division meets a column division, rather than reading as
+# a frame around each copy. The last column/row strips its own trailing border via nth-child so
+# the grid isn't closed off on the outer edges (the paper edge already marks that boundary).
+# Cell padding and the page's own padding are both 10mm, so the text sits exactly 1cm from every
+# cut line and 1cm from the paper edge - the same margin on every side, as requested. Cut color
+# matches each style's existing dashed-line tone.
 function Add-CopiesGridCss([string]$css, [string]$topClass, [string]$cutColor, [int]$columns) {
-    return $css + "`n.$topClass.copies { padding: 10mm; }`n.copies-grid { display: grid; grid-template-columns: repeat($columns, 1fr); gap: 3mm; }`n.copy-cell { border: 1pt dashed $cutColor; padding: 10mm; break-inside: avoid; page-break-inside: avoid; }"
+    return $css + @"
+
+.$topClass.copies { padding: 10mm; }
+.copies-grid { display: grid; grid-template-columns: repeat($columns, 1fr); gap: 0; }
+.copy-cell { padding: 10mm; border-right: 1pt dashed $cutColor; border-bottom: 1pt dashed $cutColor; break-inside: avoid; page-break-inside: avoid; }
+.copy-cell:nth-child(${columns}n) { border-right: none; }
+.copy-cell:nth-last-child(-n+$columns) { border-bottom: none; }
+"@
 }
 
 function Get-CardWrapper([string]$style, [bool]$usesMermaid, [int]$copies, [int]$columns) {

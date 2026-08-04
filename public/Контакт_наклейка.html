@@ -32,8 +32,10 @@ strong { font-weight: 700; }
 em { font-style: italic; }
 @media screen { body { padding: 10mm; } }
 .sheet.copies { padding: 10mm; }
-.copies-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 3mm; }
-.copy-cell { border: 1pt dashed #999; padding: 10mm; break-inside: avoid; page-break-inside: avoid; }
+.copies-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 0; }
+.copy-cell { padding: 10mm; border-right: 1pt dashed #999; border-bottom: 1pt dashed #999; break-inside: avoid; page-break-inside: avoid; }
+.copy-cell:nth-child(1n) { border-right: none; }
+.copy-cell:nth-last-child(-n+1) { border-bottom: none; }
   </style>
 
 </head>
