@@ -9,216 +9,64 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    @page {
-      size: A4;
-      margin: 10mm;
-    }
-
-    html,
-    body {
-      background: #f4ecd8;
-    }
-
-    body {
-      font-family: "Caveat", cursive;
-      color: #2b2013;
-      font-size: 17pt;
-      line-height: 1.3;
-    }
-
-    .page {
-      margin: 0 auto;
-      background: #f4ecd8;
-    }
-
-    h1 {
-      font-weight: 700;
-      font-size: 26pt;
-      text-align: left;
-      margin: 0 0 4mm 0;
-    }
-
-    h2 {
-      font-weight: 700;
-      font-size: 20pt;
-      margin: 4mm 0 1.5mm 0;
-    }
-
-    p {
-      text-align: left;
-      text-indent: 0;
-      hyphens: none;
-      margin-bottom: 2.5mm;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    ul,
-    ol {
-      margin: 1.5mm 0 2.5mm 6mm;
-    }
-
-    li {
-      margin-bottom: 1.5mm;
-      text-align: left;
-      hyphens: none;
-    }
-
-    hr {
-      border: none;
-      border-top: 0.8pt solid #8a7a5f;
-      width: 42mm;
-      margin: 4mm 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 3mm 0;
-      font-size: 14pt;
-    }
-
-    th,
-    td {
-      border: 0.6pt solid #8a7a5f;
-      padding: 1.5mm 2.5mm;
-      text-align: left;
-    }
-
-    th {
-      background: rgba(138, 122, 95, 0.12);
-      font-weight: 700;
-    }
-
-    pre {
-      background: rgba(138, 122, 95, 0.08);
-      padding: 3mm;
-      font-size: 12pt;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      font-family: "Old Standard TT", Georgia, serif;
-    }
-
-    strong {
-      font-weight: 700;
-    }
-
-    em {
-      font-style: italic;
-    }
-
-    p,
-    h1,
-    h2,
-    img,
-    table,
-    pre,
-    li {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-
-    h1,
-    h2 {
-      break-after: avoid;
-      page-break-after: avoid;
-    }
-
-    @media print {
-
-      html,
-      body {
-        background: #fff;
-      }
-
-      .page {
-        background: transparent;
-      }
-    }
-
-    @media screen {
-      body {
-        padding: 10mm 0;
-        background: #d8cdb4;
-      }
-
-      .page {
-        width: 210mm;
-        min-height: 297mm;
-        padding: 18mm 20mm;
-        box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3);
-      }
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@page { size: A4; margin: 10mm; }
+html, body { background: #f4ecd8; }
+body {
+  font-family: "Caveat", cursive;
+  color: #2b2013;
+  font-size: 17pt;
+  line-height: 1.3;
+}
+.page { margin: 0 auto; background: #f4ecd8; }
+h1 { font-weight: 700; font-size: 26pt; text-align: left; margin: 0 0 4mm 0; }
+h2 { font-weight: 700; font-size: 20pt; margin: 4mm 0 1.5mm 0; }
+p { text-align: left; text-indent: 0; hyphens: none; margin-bottom: 2.5mm; }
+img { max-width: 100%; height: auto; }
+ul, ol { margin: 1.5mm 0 2.5mm 6mm; }
+li { margin-bottom: 1.5mm; text-align: left; hyphens: none; }
+hr { border: none; border-top: 0.8pt solid #8a7a5f; width: 42mm; margin: 4mm 0; }
+table { width: 100%; border-collapse: collapse; margin: 3mm 0; font-size: 14pt; }
+th, td { border: 0.6pt solid #8a7a5f; padding: 1.5mm 2.5mm; text-align: left; }
+th { background: rgba(138, 122, 95, 0.12); font-weight: 700; }
+pre { background: rgba(138, 122, 95, 0.08); padding: 3mm; font-size: 12pt; overflow-x: auto; white-space: pre-wrap; font-family: "Old Standard TT", Georgia, serif; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
+h1, h2 { break-after: avoid; page-break-after: avoid; }
+@media print { html, body { background: #fff; } .page { background: transparent; } }
+@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 210mm; min-height: 297mm; padding: 18mm 20mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
   </style>
 
 </head>
 
 <body>
   <div class="page">
-    <!-- *GM: раздатка Краузе с начала игры · подлинный полевой журнал: обложка по-немецки, внутри предупреждение по-русски (не читать без знания немецкого в загрузе) · содержание тождественно краузе-перевод-журнала – до перевода недоступно тем, у кого немецкий не отмечен* -->
-    <h1>Feldjournal</h1>
-    <p><em>Naturhistorische und geognostische Beobachtungen, angestellt während einer Reise durch das europäische
-        Russland</em></p>
-    <p>Dr. Johann Krause, Doctor der Naturgeschichte</p>
-    <p>Entsandt von der Freiberger Bergakademie, mit Empfehlungsschreiben der Kaiserlichen Akademie der Wissenschaften
-      zu St. Petersburg.</p>
-    <p>Anno 1835</p>
-    <div style="break-after: page; page-break-after: always;"></div>
-    <h2>Comportamentum anomalum (aus den Beobachtungen):</h2>
-    <img src="../графика/краузе_рис1.png" alt="Krähe und Hofhund begegnen sich am Wegkreuz"
-      style="float:left; width:34%; margin:0 4mm 3mm 0;">
-    <p>Nr. 12. Eine Krähe und ein Hofhund, eine Viertelwerst voneinander entfernt, bewegten sich auf denselben Punkt am
-      Rande des Reviers zu. Ich folgte beiden. Die Wege trafen sich. Eine höchst ungewöhnliche Sache.</p>
-    <img src="../графика/краузе_рис9.png" alt="Journalseite mit Pflanzenskizze und Pfotenspuren"
-      style="float:right; width:26%; margin:0 0 3mm 4mm;">
-    <p>Nr. 19. Die Tiere betrachten die Menschen verschieden: die einen scheinen sie zu studieren, die anderen bemerken
-      sie überhaupt nicht. Ich fertigte ein Verzeichnis jener Personen an, denen sich die Kreaturen bereitwillig nähern.
-      Eine Regel finde ich nicht – doch vorhanden ist sie gewiss.</p>
-    <p>Nr. 27. Kreaturen verschiedener Gattungen handeln übereinstimmend, wie von einer einzigen Absicht bewegt. Weder
-      Furcht noch Hunger noch Brunft erklären dies. Sie fressen nicht, sie spielen nicht. Sie warten.</p>
-    <img src="../графика/краузе_рис4.png" alt="Heulender Wolf vor seltsamem Schein über der Schlucht"
-      style="float:left; width:36%; margin:0 4mm 3mm 0;">
-    <p>Nr. 34. In dem Revier, das die Leute Wedmina Balka nennen (dt. etwa: Hexenschlucht), zeigt sich nachts ein
-      gleichmässiger, azurblauer Schein, begleitet von anhaltendem Dröhnen. Die Quelle konnte ich nicht ermitteln: näher
-      heranzukommen gelang nicht – die Gegenwart von Wölfen verriet sich durch deren Geheul; die Hunde, die mich
-      begleiteten, legten sich zu Boden und gingen nicht weiter.</p>
-    <img src="../графика/краузе_рис7.png" alt="Drei Herren beim Tee mit dem Samowar"
-      style="float:right; width:34%; margin:0 0 3mm 4mm;">
-    <p><em>(am Rand, mit anderer Tinte, eigene Rubrik Antropologia domestica – Beobachtungen über die Sitten des
-        hiesigen Landadels):</em> Die hiesigen Gutsherren empfangen den Gast stets auf dieselbe Weise – mit Tee,
-      Gesprächen über die Ernteaussichten und Klagen über den Nachbarn; von dem Gegenstand, der sie eigentlich
-      beschäftigt, kein Wort, ehe nicht die dritte Tasse geleert ist. Löblich: eine Zurückhaltung, die eines Diplomaten
-      würdig wäre – eine solche habe ich nicht immer bei Diplomaten selbst angetroffen.</p>
-    <img src="../графика/краузе_рис3.png" alt="Bauer Dimitri, Porträtskizze"
-      style="float:right; width:20%; margin:0 0 2mm 4mm;">
-    <img src="../графика/краузе_рис2.png" alt="Bauer geht in regelmässigen Kreisen über den Hof"
-      style="float:left; width:32%; margin:0 4mm 3mm 0;">
-    <p>Nr. 38. Casus singularis: kein kleines Tier, sondern ein Mensch. Der Bauer Dimitri, bis zur Besinnungslosigkeit
-      betrunken, verbrachte die Nacht im Wolchi Log (Wolfsschlucht). Am Morgen körperlich gesund, doch verändert: der
-      Blick leer, der Gesichtsausdruck beständig sanft-selig, an die Nacht erinnert er sich an nichts. Er ging über den
-      Hof in regelmässigen Bahnen, gleichsam nach Figuren – ähnlich den Beobachtungen Nr. 12–27 an Tieren. Nach einem
-      Tag verschwand es spurlos. Ich ziehe keinen Schluss: die Medizin ist nicht mein Fach. Ich vermerke nur die
-      Übereinstimmung: dasselbe Revier – und die Veränderung trat nach einer Bewusstlosigkeit darin ein.</p>
-    <h2>Einzelne Blätter, dem Journal beigelegt (in anderer Ordnung geschrieben, mit Abkürzungen):</h2>
-    <img src="../графика/краузе_рис6.png" alt="Bündel gefalteter Feldnotizen und Karten"
-      style="float:left; width:28%; margin:0 4mm 3mm 0;">
-    <img src="../графика/краузе_рис8.png" alt="Lose Blätter mit Karte und Bohrturm-Skizze"
-      style="float:right; width:30%; margin:0 0 3mm 4mm;">
-    <p>Das Flözausgehende auf den Ländereien des S. – das reichste, das ich im europäischen Russland gesehen habe. Die
-      Lagerstätte liegt flach, die Ölqualität ist hoch; die Konzession amortisiert sich in drei Jahren. An die Direktion
-      der Compagnie: Ich empfehle dringend den Erwerb der Rechte, ehe der Ort bekannt wird. Der hiesige Fabrikant ahnt
-      den wahren Wert nicht.</p>
-    <img src="../графика/краузе_рис5.png" alt="Landschaft mit Bohrturm und Förderanlage"
-      style="width:100%; margin:3mm 0;">
+<!-- *GM: раздатка Краузе с начала игры · подлинный полевой журнал: обложка по-немецки, внутри предупреждение по-русски (не читать без знания немецкого в загрузе) · содержание тождественно краузе-перевод-журнала – до перевода недоступно тем, у кого немецкий не отмечен* -->
+<h1>Feldjournal</h1>
+<p><em>Naturhistorische und geognostische Beobachtungen, angestellt während einer Reise durch das europäische Russland</em></p>
+<p>Dr. Johann Krause, Doctor der Naturgeschichte</p>
+<p>Entsandt von der Freiberger Bergakademie, mit Empfehlungsschreiben der Kaiserlichen Akademie der Wissenschaften zu St. Petersburg.</p>
+<p>Anno 1835</p>
+<div style="break-after: page; page-break-after: always;"></div>
+<h2>Comportamentum anomalum (aus den Beobachtungen):</h2>
+<img src="../графика/краузе_рис1.png" alt="Krähe und Hofhund begegnen sich am Wegkreuz" style="float:left; width:34%; margin:0 4mm 3mm 0;">
+<p>Nr. 12. Eine Krähe und ein Hofhund, eine Viertelwerst voneinander entfernt, bewegten sich auf denselben Punkt am Rande des Reviers zu. Ich folgte beiden. Die Wege trafen sich. Eine höchst ungewöhnliche Sache.</p>
+<img src="../графика/краузе_рис9.png" alt="Journalseite mit Pflanzenskizze und Pfotenspuren" style="float:right; width:26%; margin:0 0 3mm 4mm;">
+<p>Nr. 19. Die Tiere betrachten die Menschen verschieden: die einen scheinen sie zu studieren, die anderen bemerken sie überhaupt nicht. Ich fertigte ein Verzeichnis jener Personen an, denen sich die Kreaturen bereitwillig nähern. Eine Regel finde ich nicht – doch vorhanden ist sie gewiss.</p>
+<p>Nr. 27. Kreaturen verschiedener Gattungen handeln übereinstimmend, wie von einer einzigen Absicht bewegt. Weder Furcht noch Hunger noch Brunft erklären dies. Sie fressen nicht, sie spielen nicht. Sie warten.</p>
+<img src="../графика/краузе_рис4.png" alt="Heulender Wolf vor seltsamem Schein über der Schlucht" style="float:left; width:36%; margin:0 4mm 3mm 0;">
+<p>Nr. 34. In dem Revier, das die Leute Wedmina Balka nennen (dt. etwa: Hexenschlucht), zeigt sich nachts ein gleichmässiger, azurblauer Schein, begleitet von anhaltendem Dröhnen. Die Quelle konnte ich nicht ermitteln: näher heranzukommen gelang nicht – die Gegenwart von Wölfen verriet sich durch deren Geheul; die Hunde, die mich begleiteten, legten sich zu Boden und gingen nicht weiter.</p>
+<img src="../графика/краузе_рис7.png" alt="Drei Herren beim Tee mit dem Samowar" style="float:right; width:34%; margin:0 0 3mm 4mm;">
+<p><em>(am Rand, mit anderer Tinte, eigene Rubrik Antropologia domestica – Beobachtungen über die Sitten des hiesigen Landadels):</em> Die hiesigen Gutsherren empfangen den Gast stets auf dieselbe Weise – mit Tee, Gesprächen über die Ernteaussichten und Klagen über den Nachbarn; von dem Gegenstand, der sie eigentlich beschäftigt, kein Wort, ehe nicht die dritte Tasse geleert ist. Löblich: eine Zurückhaltung, die eines Diplomaten würdig wäre – eine solche habe ich nicht immer bei Diplomaten selbst angetroffen.</p>
+<img src="../графика/краузе_рис3.png" alt="Bauer Dimitri, Porträtskizze" style="float:right; width:20%; margin:0 0 2mm 4mm;">
+<img src="../графика/краузе_рис2.png" alt="Bauer geht in regelmässigen Kreisen über den Hof" style="float:left; width:32%; margin:0 4mm 3mm 0;">
+<p>Nr. 38. Casus singularis: kein kleines Tier, sondern ein Mensch. Der Bauer Dimitri, bis zur Besinnungslosigkeit betrunken, verbrachte die Nacht im Wolchi Log (Wolfsschlucht). Am Morgen körperlich gesund, doch verändert: der Blick leer, der Gesichtsausdruck beständig sanft-selig, an die Nacht erinnert er sich an nichts. Er ging über den Hof in regelmässigen Bahnen, gleichsam nach Figuren – ähnlich den Beobachtungen Nr. 12–27 an Tieren. Nach einem Tag verschwand es spurlos. Ich ziehe keinen Schluss: die Medizin ist nicht mein Fach. Ich vermerke nur die Übereinstimmung: dasselbe Revier – und die Veränderung trat nach einer Bewusstlosigkeit darin ein.</p>
+<h2>Einzelne Blätter, dem Journal beigelegt (in anderer Ordnung geschrieben, mit Abkürzungen):</h2>
+<img src="../графика/краузе_рис6.png" alt="Bündel gefalteter Feldnotizen und Karten" style="float:left; width:28%; margin:0 4mm 3mm 0;">
+<img src="../графика/краузе_рис8.png" alt="Lose Blätter mit Karte und Bohrturm-Skizze" style="float:right; width:30%; margin:0 0 3mm 4mm;">
+<p>Das Flözausgehende auf den Ländereien des S. – das reichste, das ich im europäischen Russland gesehen habe. Die Lagerstätte liegt flach, die Ölqualität ist hoch; die Konzession amortisiert sich in drei Jahren. An die Direktion der Compagnie: Ich empfehle dringend den Erwerb der Rechte, ehe der Ort bekannt wird. Der hiesige Fabrikant ahnt den wahren Wert nicht.</p>
+<img src="../графика/краузе_рис5.png" alt="Landschaft mit Bohrturm und Förderanlage" style="width:100%; margin:3mm 0;">
   </div>
 </body>
 

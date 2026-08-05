@@ -20,6 +20,7 @@ body {
 h1 { font-size: 15pt; font-weight: 700; border-bottom: 1pt solid #333; padding-bottom: 2mm; margin-bottom: 4mm; }
 h2 { font-size: 12.5pt; font-weight: 700; margin: 5mm 0 2mm 0; }
 p { margin-bottom: 2mm; text-align: left; }
+img { max-width: 100%; height: auto; }
 ul, ol { margin: 1.5mm 0 3mm 6mm; }
 li { margin-bottom: 1mm; }
 hr { border: none; border-top: 1pt solid #999; margin: 4mm 0; }
@@ -30,8 +31,10 @@ pre { background: #f4f4f4; border: 1px solid #ddd; padding: 3mm; font-size: 9pt;
 pre.mermaid { background: #fff; border: none; text-align: center; }
 strong { font-weight: 700; }
 em { font-style: italic; }
+p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
+h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media screen { body { padding: 10mm; } }
-.sheet.copies { padding: 10mm; }
+@media screen { .sheet.copies { padding: 10mm; } }
 .copies-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 0; }
 .copy-cell { padding: 10mm; border-right: 1pt dashed #999; border-bottom: 1pt dashed #999; break-inside: avoid; page-break-inside: avoid; }
 .copy-cell:nth-child(1n) { border-right: none; }
