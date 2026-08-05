@@ -8,7 +8,6 @@
 
   <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 15mm; }
 html, body { background: #fff; }
 body {
   font-family: Georgia, "Times New Roman", serif;
@@ -16,7 +15,7 @@ body {
   font-size: 11pt;
   line-height: 1.4;
 }
-.sheet { max-width: 190mm; margin: 0 auto; padding: 10mm 6mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
 h1 { font-size: 15pt; font-weight: 700; border-bottom: 1pt solid #333; padding-bottom: 2mm; margin-bottom: 4mm; }
 h2 { font-size: 12.5pt; font-weight: 700; margin: 5mm 0 2mm 0; }
 p { margin-bottom: 2mm; text-align: left; }
@@ -34,6 +33,8 @@ em { font-style: italic; }
 p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
 h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media screen { body { padding: 10mm; } }
+@page { size: A4; margin: 10mm 15mm; }
+.sheet { padding: 0 6mm; }
   </style>
 
 </head>
@@ -47,8 +48,8 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 <ul><li><strong>Добыть бочку нефти:</strong></li></ul>
 <p>Стоимость 1000 рублей, срок – 1 такт. Требует работающей вышки; каждая вышка добывает не более одной бочки за такт. В поручении укажите, кому доставить бочку.</p>
 <p>Доставленные бочки физически хранятся в подсобном помещении; адресат получит уведомление о доставке в начале следующего раута.</p>
-<ul><li><strong>показать нефтяной пласт</strong></li></ul>
-<p>Для предоставления доступа посторонним лицам к месту добычи выпишите поручение-пропуск. Действие виртуальное, на игре физически место добычи не моделируется.</p>
+<ul><li><strong>Показать нефтяной пласт</strong></li></ul>
+<p>Для предоставления доступа посторонним лицам к месту добычи подайте заявку на показ нефтяного пласта. Действие виртуальное, на игре физически место добычи не моделируется.</p>
   </div>
 </body>
 

@@ -29,8 +29,8 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/Атмосфера.md` | Atmosphere, historical background, costuming notes and references for players (see also `public/exposition/` and `материалы/*.md`) |
 | `public/Открытые_механики.md` | Player-facing general mechanics reference: rauts schedule, commissions, free actions, letters, abilities, morning notes, safety conventions (physical/emotional interactions), police and weapons, etc. Written manually. |
 | `public/Роли.md` | Public character list players use to choose roles - updated automatically according to инструкции_по_генерации.md |
-| `public/Контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
-| `public/Общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
+| `public/Механика_контакт.md` | Rules for the alien animal possession mechanic - updated automatically according to инструкции_по_генерации.md |
+| `public/Механика_общение_с_пришельцами.md` | Rules for the alien human contact mechanic - updated automatically according to инструкции_по_генерации.md |
 | `public/letters/` | Print-ready letter files — one per letter from Корреспонденция.md. Player templates have fill-in blanks; GM incoming letters are distributed at the right moment. Each file has a GM note at top (italic, marked) and the period-style letter text below. Ефросинья's `Видение_*` files are a special case: short (3–5 sentences) first-person manic-episode outbursts giving strong emotion plus plot-trigger facts, not scenes to memorize — see existing files for tone. |
 | `public/Медицина.md` | Player-facing mechanic card for the medicine mechanic |
 | `public/characters/` | Player card files — one per character, generated from untagged text in Персонажи.md |

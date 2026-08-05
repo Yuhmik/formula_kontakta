@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 10mm; }
 html, body { background: #f4ecd8; }
 body {
   font-family: "Caveat", cursive;
@@ -36,11 +35,13 @@ p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; 
 h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media print { html, body { background: #fff; } .page { background: transparent; } }
 @media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 210mm; min-height: 297mm; padding: 18mm 20mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
+@page { size: A4; margin: 10mm; }
+.page.copies { padding: 0; }
 @media screen { .page.copies { padding: 10mm; } }
-.copies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+.copies-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 0; }
 .copy-cell { padding: 10mm; border-right: 1pt dashed #8a7a5f; border-bottom: 1pt dashed #8a7a5f; break-inside: avoid; page-break-inside: avoid; }
-.copy-cell:nth-child(2n) { border-right: none; }
-.copy-cell:nth-last-child(-n+2) { border-bottom: none; }
+.copy-cell:nth-child(1n) { border-right: none; }
+.copy-cell:nth-last-child(-n+1) { border-bottom: none; }
   </style>
 
 </head>

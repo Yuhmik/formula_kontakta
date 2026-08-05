@@ -405,7 +405,6 @@ function ConvertTo-CardHtmlBody([string]$body) {
 
 $documentCss = @'
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 10mm; }
 html, body { background: #f4ecd8; }
 body {
   font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
@@ -437,7 +436,6 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 
 $handwrittenCss = @'
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 10mm; }
 html, body { background: #f4ecd8; }
 body {
   font-family: "Caveat", cursive;
@@ -467,7 +465,6 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 
 $referenceCss = @'
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 15mm; }
 html, body { background: #fff; }
 body {
   font-family: Georgia, "Times New Roman", serif;
@@ -475,7 +472,7 @@ body {
   font-size: 11pt;
   line-height: 1.4;
 }
-.sheet { max-width: 190mm; margin: 0 auto; padding: 10mm 6mm; }
+.sheet { max-width: 190mm; margin: 0 auto; }
 h1 { font-size: 15pt; font-weight: 700; border-bottom: 1pt solid #333; padding-bottom: 2mm; margin-bottom: 4mm; }
 h2 { font-size: 12.5pt; font-weight: 700; margin: 5mm 0 2mm 0; }
 p { margin-bottom: 2mm; text-align: left; }
@@ -502,15 +499,21 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 # lines cross into a "+" wherever a row division meets a column division, rather than reading as
 # a frame around each copy. The last column/row strips its own trailing border via nth-child so
 # the grid isn't closed off on the outer edges (the paper edge already marks that boundary).
-# Cell padding is 10mm and (for document/handwritten) @page margin is also 10mm, so in print the
-# text sits exactly 1cm from every cut line and 1cm from the paper edge - the same margin on every
-# side. The outer .page.copies padding is screen-only: on screen @page margin doesn't apply, so the
-# screen mockup needs its own 1cm inset to match; in print that inset would double up with @page's
-# margin, so it's omitted there and @page alone provides the paper-edge margin. Cut color matches
-# each style's existing dashed-line tone.
+# Cell padding is 10mm, and this is also the only place that emits @page for a copies grid (see
+# Get-CardWrapper - it skips its own single-copy @page/padding whenever copies > 1, so there is
+# never a second, conflicting @page or container-padding rule sitting in the same file). Uniform
+# 10mm on every side here regardless of style, because a cut grid needs cell padding to equal the
+# outer margin on every side, not just top/bottom the way reference's single-copy prose margin
+# does. So in print the text sits exactly 1cm from every cut line and 1cm from the paper edge -
+# the same margin on every side. The outer .page.copies padding is screen-only: on screen @page
+# margin doesn't apply, so the screen mockup needs its own 1cm inset to match; in print that inset
+# would double up with @page's margin, so it's zeroed there and @page alone provides the paper-edge
+# margin. Cut color matches each style's existing dashed-line tone.
 function Add-CopiesGridCss([string]$css, [string]$topClass, [string]$cutColor, [int]$columns) {
     return $css + @"
 
+@page { size: A4; margin: 10mm; }
+.$topClass.copies { padding: 0; }
 @media screen { .$topClass.copies { padding: 10mm; } }
 .copies-grid { display: grid; grid-template-columns: repeat($columns, 1fr); gap: 0; }
 .copy-cell { padding: 10mm; border-right: 1pt dashed $cutColor; border-bottom: 1pt dashed $cutColor; break-inside: avoid; page-break-inside: avoid; }
@@ -561,9 +564,18 @@ function Get-CardWrapper([string]$style, [bool]$usesMermaid, [int]$copies, [int]
         }
     }
 
+    # Exactly one source ever provides @page margin / container padding for a given file: the
+    # copies grid below when copies > 1, or this single-copy block otherwise. Never both, so
+    # there's nothing to override and no !important needed.
     if ($copies -gt 1) {
         $wrap.Css  = Add-CopiesGridCss $wrap.Css $wrap.TopClass $wrap.CutColor $columns
         $wrap.Open = $wrap.Open -replace '(class=")(\w+)"', "`$1`$2 copies`""
+    } else {
+        switch ($style) {
+            'document'    { $wrap.Css += "`n@page { size: A4; margin: 10mm; }" }
+            'handwritten' { $wrap.Css += "`n@page { size: A4; margin: 10mm; }" }
+            'reference'   { $wrap.Css += "`n@page { size: A4; margin: 10mm 15mm; }`n.sheet { padding: 0 6mm; }" }
+        }
     }
     return $wrap
 }
