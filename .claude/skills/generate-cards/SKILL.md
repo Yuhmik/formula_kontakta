@@ -16,6 +16,8 @@ Extract all `CARD_BEGIN(Name, path/, style[, copies[, columns]]) … CARD_END` b
 
 `CARD_BEGIN` is a general-purpose mechanism, use it to generate any card-like content from a master .md source; the pipeline gives you the style templates, HTML generation, gender/name substitution, and the `copies`/`columns` print grid.
 
+**Gender-inversion word forms – SurnameRegex vs PrimaryRegex:** in the PowerShell script's `$charConfig`, `PrimaryRegex` fires only on the character's own card (matched via `CardKey` against the card name); `SurnameRegex` fires on every card. This isn't a difference in what kind of gender rule applies – it's blast radius. `PrimaryRegex` holds generic pronouns (`\bон\b`, `\bего\b`, …) that occur constantly and usually refer to someone else entirely; applied globally they'd corrupt unrelated pronouns in other characters' cards. `SurnameRegex` holds specific tokens (surnames, or a distinctive word form like `занемогла` → `занемог`) unlikely to collide with unrelated text, so it's safe everywhere. When a gender-dependent word form can appear in *other* characters' cards (e.g. Ласневская's illness described in Пирогов's medical journal), put it in `SurnameRegex`, not `PrimaryRegex`, and fix it once at the pipeline level rather than hand-wrapping every occurrence in `GENDER_RULE(...)...GENDER_END` in the source `.md`.
+
 ## Invocation
 
 - `/generate-cards` — regenerate all cards
@@ -181,6 +183,7 @@ $charConfig = @(
             ,@('Ласневскую', 'Ласневского')
             ,@('Ласневской', 'Ласневского')
             ,@('Ласневская', 'Ласневский')
+            ,@('занемогла',  'занемог')
         )
         PrimaryRegex  = @(
             ,@('Была ',      'Был ')
@@ -316,6 +319,17 @@ function ConvertTo-CardHtmlBody([string]$body) {
             continue
         }
 
+        # Raw single-line HTML tag (<img>, <div>...</div>, <hr>, ...) - passed through verbatim
+        # (unescaped), so authors can hand-write style="float:left/right; width:...; margin:..."
+        # for in-text image placement, or a forced page break like
+        # <div style="break-after: page; page-break-after: always;"></div>, that plain markdown
+        # can't express.
+        if ($trimmed -match '^<[a-zA-Z]') {
+            [void]$html.AppendLine($lines[$i])
+            $i++
+            continue
+        }
+
         if ($trimmed -match '^```(\w*)$') {
             $lang = $Matches[1]
             $i++
@@ -391,7 +405,7 @@ function ConvertTo-CardHtmlBody([string]$body) {
 
 $documentCss = @'
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 0; }
+@page { size: A4; margin: 10mm; }
 html, body { background: #f4ecd8; }
 body {
   font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
@@ -399,11 +413,12 @@ body {
   font-size: 11pt;
   line-height: 1.35;
 }
-.page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 16mm 18mm; background: #f4ecd8; }
+.page { margin: 0 auto; background: #f4ecd8; }
 h1 { text-align: center; font-weight: 700; font-size: 13pt; letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 4mm 0; }
 h1::after { content: ""; display: block; width: 42mm; margin: 3mm auto 0 auto; border-top: 0.8pt solid #5a4a2f; }
 h2 { font-weight: 700; font-size: 11.5pt; margin: 4mm 0 2mm 0; }
 p { text-align: justify; text-indent: 8mm; margin-bottom: 2mm; hyphens: auto; }
+img { max-width: 100%; height: auto; }
 ul, ol { margin: 1.5mm 0 2.5mm 5mm; padding-left: 4mm; }
 ul { list-style-type: "\2013\0020"; }
 li { margin-bottom: 1.5mm; text-align: justify; hyphens: auto; }
@@ -414,13 +429,15 @@ th { background: rgba(138, 122, 95, 0.12); font-weight: 700; }
 pre { background: rgba(138, 122, 95, 0.08); padding: 3mm; font-size: 9pt; overflow-x: auto; white-space: pre-wrap; }
 strong { font-weight: 700; }
 em { font-style: italic; }
+p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
+h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media print { html, body { background: #fff; } .page { background: transparent; } }
-@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
+@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 210mm; min-height: 297mm; padding: 16mm 18mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
 '@
 
 $handwrittenCss = @'
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { size: A4; margin: 0; }
+@page { size: A4; margin: 10mm; }
 html, body { background: #f4ecd8; }
 body {
   font-family: "Caveat", cursive;
@@ -428,10 +445,11 @@ body {
   font-size: 17pt;
   line-height: 1.3;
 }
-.page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 18mm 20mm; background: #f4ecd8; }
+.page { margin: 0 auto; background: #f4ecd8; }
 h1 { font-weight: 700; font-size: 26pt; text-align: left; margin: 0 0 4mm 0; }
 h2 { font-weight: 700; font-size: 20pt; margin: 4mm 0 1.5mm 0; }
 p { text-align: left; text-indent: 0; hyphens: none; margin-bottom: 2.5mm; }
+img { max-width: 100%; height: auto; }
 ul, ol { margin: 1.5mm 0 2.5mm 6mm; }
 li { margin-bottom: 1.5mm; text-align: left; hyphens: none; }
 hr { border: none; border-top: 0.8pt solid #8a7a5f; width: 42mm; margin: 4mm 0; }
@@ -441,8 +459,10 @@ th { background: rgba(138, 122, 95, 0.12); font-weight: 700; }
 pre { background: rgba(138, 122, 95, 0.08); padding: 3mm; font-size: 12pt; overflow-x: auto; white-space: pre-wrap; font-family: "Old Standard TT", Georgia, serif; }
 strong { font-weight: 700; }
 em { font-style: italic; }
+p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
+h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media print { html, body { background: #fff; } .page { background: transparent; } }
-@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
+@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 210mm; min-height: 297mm; padding: 18mm 20mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
 '@
 
 $referenceCss = @'
@@ -459,6 +479,7 @@ body {
 h1 { font-size: 15pt; font-weight: 700; border-bottom: 1pt solid #333; padding-bottom: 2mm; margin-bottom: 4mm; }
 h2 { font-size: 12.5pt; font-weight: 700; margin: 5mm 0 2mm 0; }
 p { margin-bottom: 2mm; text-align: left; }
+img { max-width: 100%; height: auto; }
 ul, ol { margin: 1.5mm 0 3mm 6mm; }
 li { margin-bottom: 1mm; }
 hr { border: none; border-top: 1pt solid #999; margin: 4mm 0; }
@@ -469,6 +490,8 @@ pre { background: #f4f4f4; border: 1px solid #ddd; padding: 3mm; font-size: 9pt;
 pre.mermaid { background: #fff; border: none; text-align: center; }
 strong { font-weight: 700; }
 em { font-style: italic; }
+p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
+h1, h2 { break-after: avoid; page-break-after: avoid; }
 @media screen { body { padding: 10mm; } }
 '@
 
@@ -479,13 +502,16 @@ em { font-style: italic; }
 # lines cross into a "+" wherever a row division meets a column division, rather than reading as
 # a frame around each copy. The last column/row strips its own trailing border via nth-child so
 # the grid isn't closed off on the outer edges (the paper edge already marks that boundary).
-# Cell padding and the page's own padding are both 10mm, so the text sits exactly 1cm from every
-# cut line and 1cm from the paper edge - the same margin on every side, as requested. Cut color
-# matches each style's existing dashed-line tone.
+# Cell padding is 10mm and (for document/handwritten) @page margin is also 10mm, so in print the
+# text sits exactly 1cm from every cut line and 1cm from the paper edge - the same margin on every
+# side. The outer .page.copies padding is screen-only: on screen @page margin doesn't apply, so the
+# screen mockup needs its own 1cm inset to match; in print that inset would double up with @page's
+# margin, so it's omitted there and @page alone provides the paper-edge margin. Cut color matches
+# each style's existing dashed-line tone.
 function Add-CopiesGridCss([string]$css, [string]$topClass, [string]$cutColor, [int]$columns) {
     return $css + @"
 
-.$topClass.copies { padding: 10mm; }
+@media screen { .$topClass.copies { padding: 10mm; } }
 .copies-grid { display: grid; grid-template-columns: repeat($columns, 1fr); gap: 0; }
 .copy-cell { padding: 10mm; border-right: 1pt dashed $cutColor; border-bottom: 1pt dashed $cutColor; break-inside: avoid; page-break-inside: avoid; }
 .copy-cell:nth-child(${columns}n) { border-right: none; }

@@ -101,6 +101,10 @@ Defined in `Пришельцы.md`. Key constraints to respect when writing rela
 - This mechanic creates unreliable narration and dual-role play for "possessed" characters
 
 
+## Working with the GM
+
+When the user asks to "проверь" / "посмотри" (check/look at) something – especially their own manual edits to master files – give a review only: what works, where things are inconsistent (with exact locations), then stop. Do not make edits unless explicitly asked ("исправь" / "поправь" / "внеси"). The user edits master files by hand and wants review of their own changes while keeping authorial control over the text – even obvious typos are their call to fix.
+
 ## Historical period
 
 Russia, 1835. Relevant details the writing draws on: Russian Empire Table of Ranks, provincial landowner society, Church hierarchy (благочинный = rural church supervisor), moonshining under state monopoly, serfdom, aftermath of the Polish uprising (1830–31) and the Decembrist movement. When expanding historical flavor, keep this period and context.
