@@ -37,7 +37,7 @@ Never use em dash (—) in any texts. Use en dash (–) instead.
 | `public/игротехам/` | Reference materials for game technicians and location GMs |
 | `public/графика/` | Published images (banners, posters, and other visual assets) |
 | `public/ассигнации/` | In-game banknotes for printing |
-| `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule |
+| `Динамика.md` | GM reference: authorial analysis of how the game may unfold — plot branches, pacing, resource balance, conflict geometry, GM nudge tools. What the GM interprets and adjusts, not executes by rule. Read only by the GM at design time, never during play — so it must never be the sole home of a unique rule. Mechanic rules go in `Механики.md`; alien/contact-specific rules go in `Пришельцы.md`. |
 | `Мастерский_лист.md` | GM tool: game-flow control sheet for the main-location GM |
 | `Построение_атмосферы.md` | GM reference: series plan for pre-game atmosphere publications — topics, principles, character connections, movie references, and discussion notes for the `public/exposition/` cycle |
 
