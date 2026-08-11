@@ -126,6 +126,12 @@ $charConfig = @(
             ,@('\bЕму\b', 'Ей')
             ,@('\bим\b',  'ей')
             ,@('\bИм\b',  'Ей')
+            ,@('\bартельщику\b', 'артельщице')
+            ,@('\bАртельщику\b', 'Артельщице')
+            ,@('\bартельщик\b',  'артельщица')
+            ,@('\bАртельщик\b',  'Артельщица')
+            ,@('\bгосподин\b',   'госпожа')
+            ,@('\bГосподин\b',   'Госпожа')
         )
     }
     # ── Раскольниченко (default М → can become Ж) ────────────────────────────
@@ -158,6 +164,7 @@ $charConfig = @(
         NominativeInverted = 'Валемонте'
         SurnameRegex  = @()
         PrimaryRegex  = @(
+            ,@('маг и артист', 'иллюзионистка и медиум')
             ,@('\bграф\b',  'графиня')
             ,@('\bГраф\b',  'Графиня')
             ,@('\bон\b',  'она')
@@ -631,17 +638,21 @@ foreach ($file in $sourceFiles) {
         $body = $gr.Text
         $placeholders = $gr.Placeholders
 
-        # Apply gender substitutions for characters whose gender is inverted this run
+        # Apply gender substitutions for characters whose gender is inverted this run.
+        # -creplace (case-SENSITIVE) is required here: PowerShell's plain -replace is
+        # case-insensitive, which would let the lowercase pair in each М/Ж pronoun pairing
+        # (e.g. '\bего\b' listed before '\bЕго\b') win regardless of the source's actual
+        # case, silently lowercasing capitalized/sentence-initial pronouns after inversion.
         foreach ($cfg in $activeInversions) {
             # Surname declension – applied to body and filename
             foreach ($pair in $cfg.SurnameRegex) {
-                $body = $body -replace $pair[0], $pair[1]
-                $name = $name -replace $pair[0], $pair[1]
+                $body = $body -creplace $pair[0], $pair[1]
+                $name = $name -creplace $pair[0], $pair[1]
             }
             # Pronoun/verb forms – applied only to the character's own card
             if ($cfg.CardKey -and ($name -match [regex]::Escape($cfg.CardKey))) {
                 foreach ($pair in $cfg.PrimaryRegex) {
-                    $body = $body -replace $pair[0], $pair[1]
+                    $body = $body -creplace $pair[0], $pair[1]
                 }
             }
         }
