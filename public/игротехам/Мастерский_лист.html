@@ -1,0 +1,1008 @@
+<!-- Создан на основе контента `Мастерский_лист.md`, но содержит тщательное ручное форматирование: не перегенерировать автоматически! -->
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Мастерский лист состояния игры – печать</title>
+
+  <!-- GM: печать А4 landscape, поля 10мм, 3 листа. В браузере: Ctrl+P → альбомная
+       ориентация → поля "Нет" или "Минимальные" → включить "Фоновые рисунки/цвета". -->
+
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+    }
+
+    body {
+      font-size: 8pt;
+      line-height: 1.15;
+    }
+
+    .page {
+      width: 277mm;
+      min-height: 189mm;
+      background: #fff;
+      padding: 3mm 6mm 4mm;
+    }
+
+    @media print {
+      .page {
+        page-break-after: always;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      .gm-note {
+        display: none;
+      }
+    }
+
+    @media screen {
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #ccc;
+        padding: 8mm 0 20mm;
+      }
+
+      .page {
+        box-shadow: 0 0 5mm rgba(0, 0, 0, .35);
+        margin-bottom: 8mm;
+      }
+
+      .gm-note {
+        width: 277mm;
+        margin-bottom: 4mm;
+        padding: 2mm 4mm;
+        background: #fff8d8;
+        border: 0.5pt solid #c9a;
+        font-size: 9pt;
+      }
+    }
+
+    h1.title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13pt;
+      font-weight: bold;
+      margin: 0 0 2mm;
+      padding-bottom: 1mm;
+      border-bottom: 1.2pt solid #000;
+    }
+
+    h1.title .num {
+      font-size: 9pt;
+      font-weight: normal;
+      color: #555;
+    }
+
+    h2.sec {
+      font-size: 9pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      background: #ececec;
+      padding: 0.5mm 2mm;
+      margin: 1.4mm 0 0.8mm;
+      border-left: 2.5pt solid #333;
+    }
+
+    h3.sub {
+      font-size: 8pt;
+      font-weight: bold;
+      margin: 1.1mm 0 0.4mm;
+    }
+
+    .note {
+      color: #444;
+      font-style: italic;
+    }
+
+    /* checkbox */
+    .cb {
+      display: inline-block;
+      width: 2.5mm;
+      height: 2.5mm;
+      border: 0.6pt solid #000;
+      margin: 0 1mm 0 0;
+      vertical-align: -0.3mm;
+      flex: none;
+    }
+
+    .cb.on {
+      background: #ddd;
+      position: relative;
+    }
+
+    .cb.on::after {
+      content: "0";
+      font-size: 6pt;
+      position: absolute;
+      left: 0.5mm;
+      top: 0.2mm;
+    }
+
+    /* fill-in blanks */
+    .fill {
+      display: inline-block;
+      border-bottom: 0.5pt solid #000;
+      height: 2.6mm;
+      vertical-align: -0.4mm;
+    }
+
+    .fill.xxs {
+      width: 4.2mm;
+    }
+
+    .fill.xs {
+      width: 6mm;
+    }
+
+    .fill.s {
+      width: 10mm;
+    }
+
+    .fill.m {
+      width: 18mm;
+    }
+
+    .fill.l {
+      width: 30mm;
+    }
+
+    .fill.xl {
+      width: 48mm;
+    }
+
+    .fill.grow {
+      flex: 1 1 auto;
+      min-width: 12mm;
+    }
+
+    .ln {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2mm;
+      flex-wrap: wrap;
+      margin: 0.2mm 0;
+    }
+
+    .ln.block {
+      display: block;
+      margin: 0.35mm 0;
+    }
+
+    .tokrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8mm 3mm;
+      margin: 0.2mm 0;
+    }
+
+    .tok {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.8mm;
+      white-space: nowrap;
+    }
+
+    .grid15 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1mm 2mm;
+      margin: 0.6mm 0;
+    }
+
+    .matlabel {
+      display: inline-block;
+      min-width: 16mm;
+    }
+
+    .grid15 .tok {
+      white-space: nowrap;
+    }
+
+    .cols2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+    }
+
+    .cols3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .cols-2r {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(2, auto);
+      gap: 3mm 5mm;
+    }
+
+    .col-main {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 5mm;
+    }
+
+    .box {
+      border: 0.5pt solid #999;
+      border-radius: 0.8mm;
+      padding: 1.5mm 2.5mm 2mm;
+      margin-bottom: 2mm;
+    }
+
+    table.ct {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.3pt;
+      margin-top: 0.8mm;
+    }
+
+    table.ct th,
+    table.ct td {
+      border: 0.5pt solid #888;
+      padding: 0.5mm 1mm;
+      text-align: center;
+      height: 4mm;
+    }
+
+    table.ct thead th {
+      background: #ececec;
+      font-weight: bold;
+    }
+
+    table.ct td.name {
+      text-align: left;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+
+    table.ct td.notes {
+      text-align: left;
+    }
+
+    .legend {
+      font-size: 7.3pt;
+      color: #333;
+      margin-top: 0.8mm;
+    }
+
+    .takt-bar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border: 0.6pt solid #333;
+      border-radius: 1mm;
+      padding: 1mm 3mm;
+      margin-bottom: 1.2mm;
+    }
+
+    .takt-nums {
+      font-size: 15pt;
+      letter-spacing: 2mm;
+    }
+
+    .takt-note {
+      font-size: 7.6pt;
+      flex-basis: 100%;
+      margin-top: 1mm;
+      color: #333;
+    }
+
+    .refs {
+      font-size: 7.3pt;
+      color: #333;
+      margin: 1mm 0;
+    }
+
+    .final-nums {
+      font-size: 8pt;
+      letter-spacing: 1mm;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="gm-note">Печать: Ctrl+P → альбомная (landscape) ориентация, поля минимальные, «Фоновые графические
+    элементы» включены. 3 листа А4, по одному экземпляру на игру. Отметки – карандашом.</div>
+
+  <!-- ================= ЛИСТ 1: ТАКТ / ТОПЛИВО / ПОЛИЦИЯ ================= -->
+  <div class="page">
+    <h1 class="title">Мастерский лист состояния игры <span class="num">1 / 3 · Такт · Топливо · Полиция</span></h1>
+
+    <div class="takt-bar">
+      <div class="takt-nums">ТАКТ: ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬</div>
+      <div class="takt-note"><b>День 1:</b> Время старта: <span class="fill xxs"></span>:<span class="fill xxs"></span>,
+        такты:
+        1–<span class="fill xxs"></span> (<span class="fill xxs"></span> – обед, <span class="fill xxs"></span> – ужин)
+        ‖
+        <b>День 2:</b> Время старта: <span class="fill xxs"></span>:<span class="fill xxs"></span>, такты:<span
+          class="fill xxs"></span>–11 (<span class="fill xxs"></span> – завтрак, <span class="fill xxs"></span>
+        – обед, <span class="fill xxs"></span> – финал), доп.время (12, 13...). Выезд до: <span
+          class="fill xxs"></span>:<span class="fill xxs"></span>
+      </div>
+    </div>
+
+    <div class="cols3">
+      <!-- ТОПЛИВО -->
+      <div>
+        <h2 class="sec">Топливо (главный счётчик игры)</h2>
+        <div class="ln"><b>Передано пришельцам:</b></div>
+        <div class="ln">самогон <span class="cb"></span><span class="cb"></span><span class="cb"></span><span
+            class="cb"></span><span class="cb"></span> · нефть <span class="cb"></span><span class="cb"></span><span
+            class="cb"></span><span class="cb"></span><span class="cb"></span></div>
+        <div class="ln note">(нужно 5 любого ОДНОГО типа)</div>
+
+        <h3 class="sub">Самогон</h3>
+        <div class="ln note">Винокурня Работает / Блокирована / раЗрушена:<br>
+          такт:состояние ( Р | Б | З )</div>
+        <div class="ln">0:Р, <span class="fill grow"></span></div>
+        <div class="ln"><b>Произведено бочек</b> (вписать кому отгружено):</div>
+        <div class="grid15">
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+        </div>
+        <div class="ln">Продано на рынок: <span class="cb"></span><span class="cb"></span><span class="cb"></span><span
+            class="cb"></span><span class="cb"></span><span class="cb"></span><span class="cb"></span><span
+            class="cb"></span><span class="cb"></span><span class="cb"></span></div>
+
+        <h3 class="sub">Нефть</h3>
+        <div class="ln note">Вышка# -(не построена)/Работает/Охраняется/раЗрушена:<br>
+          такт:состояние ( - | Р | О | З )</div>
+        <div class="ln">[Вышка#1] 0:-, <span class="fill grow"></span></div>
+        <div class="ln">[Вышка#2] 0:-, <span class="fill grow"></span></div>
+        <div class="ln">[Вышка#3] 0:-, <span class="fill grow"></span></div>
+        <div class="ln">[Вышка#4] 0:-, <span class="fill grow"></span></div>
+        <div class="ln"><b>Произведено бочек</b> (вписать кому отгружено):</div>
+        <div class="grid15">
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+          <span class="tok"><span class="cb"></span><span class="fill m"></span></span>
+        </div>
+
+        <div class="ln">
+          <h3 class="sub">Нефтяной шпионаж Краузе</h3> (вписать такт)
+        </div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;Краузе осмотрел
+            пласт</span> <span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;отправил
+            отчёт</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;отчёт перехвачен
+            полицией</span> <span class="tok"><span class="cb"></span>&nbsp;отправлен дальше</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;Краузе получил
+            ответ Компании и охранный лист</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;ответ перехвачен
+            полицией</span> <span class="tok"><span class="cb"></span>&nbsp;отправлен дальше</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;Строганов-ст.
+            получил приглашение Компании</span></div>
+      </div>
+
+      <!-- ПОЛИЦИЯ: донесения + осведомители -->
+      <div>
+        <h2 class="sec">Полиция</h2>
+        <h3 class="sub">Донесения начальству (обоснования запросов)</h3>
+        <div class="ln note">такт кому:тема, кому = П | Ж (полиция / жандармерия)</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> <span class="fill xxs"></span>:<span
+            class="fill grow"></span></div>
+        <hr class="note" style="margin: 3mm 0 1mm 0">
+
+        <h3 class="sub">Осведомители Доложейко</h3>
+        <p class="ln">самогон (такт: имя, кол-во)</p>
+        <div class="ln note">· для сдерживания самогоноварения</div>
+        <div class="tokrow">
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+        </div>
+        <p class="ln">нефть (такт: имя, кол-во)</p>
+        <div class="ln note">· для сдерживания нефтедобычи</div>
+        <div class="tokrow">
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+        </div>
+        <p class="ln">аномалии поведения животных (такт: имя/место)</p>
+        <div class="ln note">· для интенсификации поисков инопланетян
+        </div>
+        <div class="tokrow">
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+          <div class="ln"><span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill l"></span></span>
+          </div>
+        </div>
+        <p class="ln">народные волнения (такт)</p>
+        <div class="ln note">· для сдерживания проповедей</div>
+        <div class="tokrow">
+          <div class="ln">
+            <span class="tok"><span class="cb"></span><span class="fill s"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill s"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill s"></span></span>
+            <span class="tok"><span class="cb"></span><span class="fill s"></span></span>
+          </div>
+        </div>
+        <div class="ln" style="margin: 1mm 0 0 0"><span class="cb"></span><span class="fill xxs"></span> санитарный
+          манифест <span class="note">· такт 2–4, улика против Фишнер</span></div>
+      </div>
+
+      <!-- ПОЛИЦИЯ: предписания -->
+      <div>
+        <div class="ln">
+          <h3 class="sub" style="margin-top:0;">Полицейские предписания</h3> (вписать такт выдачи)
+        </div>
+        <div class="ln">Директива о самогоноварении: <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;выдана</span> <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;зачитана</span></div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> 1 Отповедь про инопланетян</div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> 2 Отповедь про сверхестественное
+        </div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> 3 Порицание за донесение в обход
+          губернии</div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> 4 Выяснить слухи про инопланетян
+          <span class="note">– см. КОНТАКТ</span>
+        </div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> 5 Подавить крестьянские бунты <span
+            class="note">– см. НАРОД И ЦЕРКОВЬ</span></div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> Приказ об аресте Валемонте <span
+            class="note">– см. Труппа Валемонте</span></div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> Указ Громову за
+          вред
+          промыслам <span class="note">– см. Церк. эскалация</span></div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> Указ Громову за
+          бунт
+          в Горихвостовке <span class="note">– см. Церк.эск-я</span></div>
+        <div class="ln block"><span class="cb"></span><span class="fill xxs"></span> Приказ про Горихвостова <span
+            class="note">– см. Отчёт Краузе в Акад-ю</span></div>
+
+        <div class="ln">
+          <h3 class="sub">Жандармские предписания</h3> (вписать такт выдачи)
+        </div>
+        <div class="ln"><span class="cb on"></span> Надзорное предписание по Горихвостову</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Надзорное предписание по Чарторыжскому
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Приказ об аресте <span
+            class="fill l"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Приказ об аресте <span
+            class="fill l"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Приказ об аресте <span
+            class="fill l"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Уведомл. о блокаде В.Балки
+          <span class="note">– Отчёт Краузе или др.</span>
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span>&nbsp;Отстранение за
+          злостное неисполнение</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span>&nbsp;Повышение за верную
+          службу</span></div>
+
+        <div class="ln">
+          <h3 class="sub">Силовые возможности/действия</h3>
+        </div>
+        <div class="ln note">Обыск/изъятие/задержание: такт: действие имя</div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln" style="margin: 1mm 0">Усил-й наряд: <span class="cb"></span><span
+            class="fill xxs"></span>запрошен <span class="cb"></span><span class="fill xxs"></span>ответ<span
+            class="cb"></span><span class="fill xxs"></span>прибыл</div>
+        <div class="ln">Жанд. прикомандирование + Открытый лист: <span class="cb"></span><span class="fill xxs"></span>
+        </div>
+
+        <!-- Состояние Волчьего Лога/Ведьминой Балки -->
+        <h3 class="sub">Состояние Волчьего Лога/Ведьминой Балки</h3>
+        <div class="ln">свободно / полицейский кордон / крестьянская застава / обыск / после
+          отлёта на стартовых / после отлёта на маршевых / после реквизиции</div>
+        <div class="ln note">такт:состояние ( С ПК КЗ Об ПОС ПОМ ПР )</div>
+        <div class="ln">0:С, <span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+
+        <div class="ln" style="margin-top:1mm;"><span class="cb"></span> Усиленный обыск Ведьминой Балки
+          <span class="note">– точка невозврата:</span>
+        </div>
+        <div class="ln note">далее только отлёт или реквизиция корабля – см. ФИНАЛ</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ЛИСТ 2: ПЕРЕПИСКА ================= -->
+  <div class="page">
+    <h1 class="title">Мастерский лист состояния игры <span class="num">2 / 3 · Переписка</span></h1>
+
+    <div class="cols-2r">
+      <!-- Польские письма -->
+      <div class="box">
+        <div class="ln">
+          <h2 class="sec">Польские письма</h2> (вписать такт)
+        </div>
+        <div class="ln"><span class="cb on"></span> Фишнер выдана записка 1 "найти связную"</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> письма получены связной: <span
+            class="fill m"></span> <span class="note">если известно</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Фишнер выдана записка 2 "забрать пакет у
+          связной" <span class="note">+3-5 тактов после записки 1</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Фишнер забрала письма у связной: <span
+            class="fill m"></span> <span class="note">если известно</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Фишнер выдана записка 3 "вызов к
+          больному" <span class="note">· через 1–2 такта после записки 2</span>
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> сцена передачи писем в деревне <span
+            class="note">· отклик Фишнер на записку 3</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> перехват польских писем полицией: у кого
+          и
+          как <span class="fill grow"></span></div>
+        <div class="ln note" style="margin-top:1mm;">Примечания:</div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+      </div>
+
+      <!-- Отчёт Краузе -->
+      <div class="box">
+        <div class="ln">
+          <h2 class="sec">Отчёт Краузе в Академию</h2> (вписать такт)
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> полевой журнал Краузе переведён с
+          немецкого, кому: <span class="fill grow"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span>выдано
+          напоминание<span class="cb"></span><span class="fill xxs"></span>отправлен
+          отчёт<span class="cb"></span><span class="fill xxs"></span>получен ответ</div>
+        <div class="ln"> <span class="cb"></span>отчёт адресован Жуковскому
+          <span class="cb"></span> назван первооткрывателем: <span class="fill grow"></span>
+        </div>
+        <div class="ln"><span class="cb"></span> приложения: <span class="fill grow"></span></div>
+        <div class="ln" style="margin-bottom:1mm;"><span class="fill grow"></span></div>
+        <div class="ln" style="margin-bottom:1mm;"><span class="fill grow"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span>&nbsp;отчёт перехвачен
+          полицией <span class="cb"></span>отправлен дальше</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> реакция III Отделения: блокада
+          Ведьминой
+          Балки <span class="note">+~2 такта, если не Жуковскому</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> письмо Жуковского Горихвостову про
+          академию</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span>&nbsp;письмо Жуковского
+          перехвачено полицией <span class="cb"></span>отправлено дальше</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> Приказ Свербееву про Горихвостова: изъять
+          артефакты и прекратить преследование</div>
+        <div class="ln note" style="margin-top:1mm;">Примечания:</div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+      </div>
+
+      <!-- Труппа Валемонте -->
+      <div class="box">
+        <div class="ln">
+          <h2 class="sec">Труппа Валемонте</h2> (вписать такт)
+        </div>
+        <div class="ln note">Кто-то из Валемонте, Ледонтова, Раскольниченко имеет:</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> контакт 1 уровня = зелёная лента</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> контакт 2 уровня = сиреневая лента</div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> имеет артефакт</div>
+        <div class="ln note" style="margin-top:1mm;">Примечания:</div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+      </div>
+
+      <!-- Статьи Раскольниченко -->
+      <div class="box">
+        <div class="ln">
+          <h2 class="sec">Статьи Раскольниченко</h2> (вписать такт)
+        </div>
+        <h3 class="sub">про уезд</h3>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;выдан
+            черновик</span> <span class="note">· много слухов или контакт в группе</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;статья
+            отправлена</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;перехвачена
+            полицией</span> <span class="tok"><span class="cb"></span>&nbsp;отправлена дальше</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;опубликована</span>
+          <span class="note">· 1–3 такта после неперехваченной отправки</span>
+        </div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;письмо Жуковского
+            Горихвостову про статью Раскольниченко</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;письмо Жуковского
+            перехвачено полицией</span> <span class="tok"><span class="cb"></span>&nbsp;отправлено дальше</span></div>
+        <h3 class="sub">о представлении</h3>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;выдан для
+            подписания договор Валемонте-Строганов(мл)</span> <span class="note">· получен артефакт</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;подписан договор
+            Валемонте-Строганов(мл)</span> <span class="note">· когда договор выдан</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;выдан
+            черновик</span> <span class="note">· труппой получен артефакт</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;статья
+            отправлена</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;перехвачена
+            полицией</span> <span class="tok"><span class="cb"></span>&nbsp;отправлена дальше</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;опубликована</span>
+          <span class="note">· 1–3 такта после неперехваченной отправки</span>
+        </div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;приглашение
+            Императрицы</span> <span class="note">· после публикации</span></div>
+        <div class="ln"><span class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;подорожная
+            Императрицы</span> <span class="note">· после приглашения/выступления</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ЛИСТ 3: КОНТАКТ / НАРОД И ЦЕРКОВЬ / ФИНАЛ ================= -->
+  <div class="page">
+    <h1 class="title">Мастерский лист состояния игры <span class="num">3 / 3 · Контакт · Народ и Церковь · Финал</span>
+    </h1>
+
+    <div class="col-main">
+      <!-- КОНТАКТ -->
+      <div>
+        <div class="ln">
+          <h2 class="sec">Контакт</h2><span class="cb"></span> Много слухов про Ведьмину Балку:
+        </div>
+        <div class="box">
+          <div class="tokrow">
+            <span class="tok"><span class="cb"></span> видения</span>
+            <span class="tok"><span class="cb"></span> проповеди</span>
+            <span class="tok"><span class="cb"></span> бунты</span>
+            <span class="tok"><span class="cb"></span> поиски в Логе</span>
+            <span class="tok"><span class="cb"></span> аномалии животных</span>
+            <span class="tok"><span class="cb"></span> аномалии людей</span>
+            <span class="tok"><span class="cb"></span> ночные визиты</span>
+            <span class="tok"><span class="cb"></span> контакты 1 уровня</span>
+            <span class="tok"><span class="cb"></span> контакты 2 уровня</span>
+            <span class="tok"><span class="cb"></span> артефакты</span>
+            <span class="tok"><span class="cb"></span> статьи</span>
+          </div>
+        </div>
+
+        <div class="ln">
+          <h3 class="sub">Артефакты</h3> (вписать такт)
+        </div>
+        <div class="ln"><span class="matlabel">пирамида:</span> <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;описание</span> <span class="fill m"></span> <span class="tok"><span
+              class="cb"></span><span class="fill xxs"></span>&nbsp;артефакт</span> <span class="fill m"></span> <span
+            class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;изъят</span></div>
+
+        <div class="ln"><span class="matlabel">маятник:</span> <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;описание</span> <span class="fill m"></span> <span class="tok"><span
+              class="cb"></span><span class="fill xxs"></span>&nbsp;артефакт</span> <span class="fill m"></span> <span
+            class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;изъят</span></div>
+
+        <div class="ln"><span class="matlabel">цилиндр:</span> <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;описание</span> <span class="fill m"></span> <span class="tok"><span
+              class="cb"></span><span class="fill xxs"></span>&nbsp;артефакт</span> <span class="fill m"></span> <span
+            class="tok"><span class="cb"></span><span class="fill xxs"></span>&nbsp;изъят</span></div>
+
+        <div class="ln">
+          <h3 class="sub">Уровни контакта</h3> (вписать такт получения)
+        </div>
+        <div class="legend">З = зелёная лента (пришелец в питомце) · С = синяя лента (может прийти в Ведьмину Балку) ·
+          <br> Ф = сиреневая лента (Общение с пришельцами) · Х = очищение питомца · О = мед. отказ от контакта
+        </div>
+        <table class="ct">
+          <thead>
+            <tr>
+              <th>Персонаж</th>
+              <th>З</th>
+              <th>С</th>
+              <th>Ф</th>
+              <th>Х</th>
+              <th>О</th>
+              <th>примечания</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="name">Самохвалов</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Самохвалова</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">М-ль Самохвалова</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Горихвостов</td>
+              <td></td>
+              <td>0</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Чарторыжский</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Свербеев</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Доложейко</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Громов</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Ефросинья</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Пирогов</td>
+              <td>0</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Фишнер</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Строганов-ст</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Строганов-мл</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Валемонте</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Раскольниченко</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+            <tr>
+              <td class="name">Ледонтова</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="notes"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ln note">Если получилось З + Ф, выдайте записку «Понимание_питомца».</div>
+
+        <div class="ln">
+          <h3 class="sub">Лекарства</h3> (такт готовности: название, действие)
+        </div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+      </div>
+
+      <!-- НАРОД И ЦЕРКОВЬ + ФИНАЛ -->
+      <div>
+        <h2 class="sec">Народ и Церковь</h2>
+        <div class="ln">Напряжённость крестьян (такт: уровень 0..5): 0:0, <span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+
+        <div class="ln">
+          <h3 class="sub">Проповеди Громова</h3> (такт)
+        </div>
+        <div class="ln">адские силы: <span class="fill grow"></span></div>
+        <div class="ln">адская жидкость: <span class="fill grow"></span></div>
+        <div class="ln">успокоить: <span class="fill grow"></span></div>
+
+        <div class="ln">
+          <h3 class="sub">Беседы Фишнер</h3> (такт: тема)
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> : <span class="fill grow"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> : <span class="fill grow"></span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> : <span class="fill grow"></span></div>
+
+        <div class="ln">
+          <h3 class="sub">Видения Ефросиньи</h3> (такт)
+        </div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов в зверях <span class="note">→
+            инопланетяне в животных</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов за огородом <span class="note">→
+            Ведьмина Балка</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов из земли <span class="note">→
+            нефтедобыча</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов на винокурне <span class="note">→
+            самогоноварение</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов в Митьке <span class="note">→
+            способ
+            попасть в Ведьмину Балку</span></div>
+        <div class="ln"><span class="cb"></span><span class="fill xxs"></span> бесов в молодом барине <span
+            class="note">→ исчезновение Ласневского</span></div>
+
+        <div class="ln">
+          <h3 class="sub">События</h3> (такт)
+        </div>
+        <div class="ln">беспорядки в Волчьем Логе: <span class="fill grow"></span></div>
+        <div class="ln">разрушение нефтяной вышки: <span class="fill grow"></span></div>
+        <div class="ln">статус церковного огорода: <span class="fill grow"></span></div>
+        <div class="ln"><span class="fill grow"></span></div>
+
+        <h3 class="sub">Церковная эскалация Громова</h3>
+        <div class="ln">Ефросинья: <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;предупреждение</span> → <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;указ (запрет и ссылка)</span></div>
+        <div class="ln">Вред промыслам/нефть: <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;предупреждение</span> → <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;указ (арест)</span></div>
+        <div class="ln">Суеверия/бесовщина: <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;предупреждение</span> → <span class="tok"><span class="cb"></span><span
+              class="fill xxs"></span>&nbsp;указ (арест)</span></div>
+
+        <h2 class="sec" style="margin-top:3mm;">Финал: такт <span class="fill s"></span></h2>
+        <div class="ln"><span class="tok"><span class="cb"></span>&nbsp;стартовые двигатели</span> <span
+            class="tok"><span class="cb"></span>&nbsp;маршевые двигатели</span> <span class="tok"><span
+              class="cb"></span>&nbsp;реквизиция</span> <span class="tok"><span class="cb"></span>&nbsp;открытый
+            финал</span></div>
+        <div class="ln" style="margin-top:1mm;">Оставлено осиротевших пришельцев: <span class="fill grow"></span></div>
+
+        <h3 class="sub">Состояние Ласневской по такту отлёта:</h3>
+        <div class="ln note">1 2 3 4 : гибель │ 5 6 7 : блаженная, разум повреждён │<br> 8 9 : полное выздоровление │
+          10 11 … : выздоровление +
+          сверхзнание</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
