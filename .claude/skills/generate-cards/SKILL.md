@@ -64,6 +64,13 @@ $charConfig = @(
             ,@('Горихвостове',   'Горихвостовой')
             ,@('Горихвостову',   'Горихвостовой')
             ,@('Горихвостова',   'Горихвостовой')
+            # Verb agreement when Горихвостов is grammatical subject in text outside their own
+            # card (PrimaryRegex can't reach it there, see note above). Matched against the raw
+            # nominative+verb phrase BEFORE the bare nominative rule below runs, and placed after
+            # the oblique-form rules above so it can't collide with a genuine genitive/accusative
+            # "Горихвостова" elsewhere in the sentence - those are already consumed by the time
+            # this rule runs. Add further "Горихвостов <masc.verb>" pairs here as they turn up.
+            ,@('Горихвостов вызывал\b', 'Горихвостова вызывала')
             ,@('Горихвостов\b',  'Горихвостова')
         )
         PrimaryRegex  = @(
@@ -184,9 +191,21 @@ $charConfig = @(
         CardKey            = 'Ласневск'
         NominativeDefault  = 'Ласневская'
         NominativeInverted = 'Ласневский'
-        # Adjective-type surname: nom.Ж Ласневская → nom.М Ласневский;
-        # oblique Ж forms (Ласневской, Ласневскую) → М genitive Ласневского.
+        # Adjective-type surname: nom.Ж Ласневская → nom.М Ласневский.
+        # Ж "Ласневской" is genitive/dative/prepositional all at once, but those three
+        # diverge in М (Ласневского/Ласневскому/Ласневском) - a bare token swap can't tell
+        # them apart. The preposition immediately before the token disambiguates dative
+        # ("к Ласневской") and prepositional ("о/об Ласневской") in the source text; those
+        # go first so they consume the token before the bare fallback below (unprefixed
+        # "Ласневской", e.g. "осмотр Ласневской", "сердце Ласневской") defaults it to
+        # genitive Ласневского, which also covers the plain genitive/instrumental cases.
         SurnameRegex  = @(
+            ,@('к Ласневской',  'к Ласневскому')
+            ,@('К Ласневской',  'К Ласневскому')
+            ,@('о Ласневской',  'о Ласневском')
+            ,@('О Ласневской',  'О Ласневском')
+            ,@('об Ласневской', 'об Ласневском')
+            ,@('Об Ласневской', 'Об Ласневском')
             ,@('Ласневскую', 'Ласневского')
             ,@('Ласневской', 'Ласневского')
             ,@('Ласневская', 'Ласневский')

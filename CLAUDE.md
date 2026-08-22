@@ -57,6 +57,9 @@ Ready-to-publication texts from `материалы/` goes to `public/exposition
 
 Some texts may use pre-1918 archaic Russian orthography (е → ѣ, etc.) for deliberate period atmosphere. Do not "correct" these spellings — they are intentional, preserve the archaic orthography throughout.
 
+- Don't write "не X, а Y" (not X, but Y) contrasts against a rejected/earlier framing when revising a description after a correction — state only the current, accepted interpretation. Git history is where the old framing lives, not the prose.
+- Refer to a character's animal companion generically as "питомец" (pet), not by a specific species like "кот" (cat), in any file discussing the contact mechanic in general terms (`Динамика.md`, etc.). The actual animal is the player's choice; `Персонажи.md`'s **Питомец (для примера):** field is explicitly illustrative, not settled fact.
+
 
 ## Character sheet format (Персонажи.md)
 
