@@ -1,9 +1,9 @@
 ---
 name: generate-roles
-description: Generate or refresh public/Роли.md (the public character list), public/Роли.html (its print-ready A4 twin, no portraits), and public/Карточки_персонажей.html (personal character cards, one page per player) from Персонажи.md/Игроки.md. Use whenever the user types /generate-roles, asks to regenerate the role list, the printable role list, or personal character cards, rebuild Роли.md, Роли.html or Карточки_персонажей.html, or has just edited Персонажи.md or Игроки.md and needs the public documents refreshed.
+description: Generate or refresh public/Роли.md (the public character list), public/Роли.html (its print-ready A4 twin, no portraits), and public/персонажи/<персонаж>.html (one print-ready A4 personal character card per player) from Персонажи.md/Игроки.md. Use whenever the user types /generate-roles, asks to regenerate the role list, the printable role list, or personal character cards, rebuild Роли.md, Роли.html or the files in public/персонажи/, or has just edited Персонажи.md or Игроки.md and needs the public documents refreshed.
 ---
 
-Generate `public/Роли.md`, `public/Роли.html`, and `public/Карточки_персонажей.html` from the project source files.
+Generate `public/Роли.md`, `public/Роли.html`, and one HTML file per character in `public/персонажи/` from the project source files.
 
 ## Step 1 – Read the generation rules
 
@@ -11,7 +11,7 @@ Read `инструкции_по_генерации.md` in full. Authoritative se
 
 - "Генерация публичного списка ролей `public/Роли.md`" – what goes into the role list and in what order.
 - "Печатная версия `public/Роли.html`" – how the print twin of the role list differs from the `.md` version.
-- "Персонажные карточки" – structure of each player's personal card in `public/Карточки_персонажей.html`.
+- "Персонажные карточки" – structure of each player's personal card in `public/персонажи/`.
 - "Смена гендера персонажа" – the complete gender-adaptation ruleset, shared by all three outputs.
 
 Apply these rules as written – do not rely on remembered or cached versions.
@@ -49,23 +49,23 @@ The first line of the output must be the origin marker, followed by an empty lin
 <!-- generated from `Персонажи.md` -->
 ```
 
-## Step 5 – Generate `public/Карточки_персонажей.html`
+## Step 5 – Generate `public/персонажи/<персонаж>.html`
 
-Per "Персонажные карточки", build one card per character and assemble them into a single HTML file, one character per printed page (`page-break-after: always` on every card except the last, so print output splits at character boundaries).
+Per "Персонажные карточки", build one card per character and write each to its own file `public/персонажи/<персонаж>.html`, where `<персонаж>` is that character's value in the `персонаж` column of `Игроки.md`. Each file is a single A4 print page (`@page { size: A4; }`).
 
 Each card:
 
-1. Starts with that character's full block already produced for `public/Роли.md` in Step 3 (heading, role/age subtitle, `PUB_INFO` paragraphs, portrait, player contact/status line) – reuse it verbatim rather than recomputing it.
-2. Followed by the untagged biography material for that character from `Персонажи.md`:
+1. The portrait is the very first element on the page (before the heading), floated to the top-right corner. The heading, role/age subtitle, `PUB_INFO` paragraphs (reused verbatim from Step 3), and the biography text from point 2 below all flow as normal body content after it, wrapping around it on the left for as long as they're shorter than the image – don't insert any divider or heading right after the portrait, or the wrap breaks early. No caption or attribution line under the image, and no player contact/status line on the card (the card is handed directly to that player, who doesn't need to be told their own handle).
+2. The untagged biography material for that character from `Персонажи.md`:
    - starts right after `PUB_END` (skipping over the optional `GM_INFO`…`GM_END` block that may sit directly after it), runs up to the next `## ` character heading
    - strips every `GM_INFO`…`GM_END` block entirely
    - resolves every `GENDER_RULE(condition)`…`GENDER_END` block: keep the enclosed text only if `condition` holds for this run (check each named character's `пол` in `Игроки.md`; support compound `and`/`or` conditions exactly as written in `Персонажи.md`); the `GENDER_RULE(...)`/`GENDER_END` tags themselves are never kept
    - applies the full "Смена гендера персонажа" ruleset to the surviving text – both for the card's own character when their gender is inverted this run, and for any other character named within that text (e.g. surname case forms)
-3. Ends with a "Для вдохновения" section built from the character's bare (non-`GM_INFO`) `ref:` line and the bullet list of links directly under it: any text after `ref:` becomes an intro line before the list, an empty `ref:` means the section is just the list. No gender substitution here – these are links to real people/films/books outside the game.
+3. Ends with a "Для вдохновения" section built from the character's bare (non-`GM_INFO`) `ref:` line and the bullet list of links directly under it: any text after `ref:` becomes an intro line before the list, an empty `ref:` means the section is just the list. `GENDER_RULE(...)`/`GENDER_END` blocks inside this bullet list are still resolved for inclusion (same condition-check as point 2) – some ref entries only make sense for one gender variant of a character – but no grammatical gender substitution is applied to the surviving text itself: these are links to real people/films/books outside the game. No `<hr>` or blank divider between the biography and this heading – it follows directly after the last paragraph.
 
-Use simple, print-friendly HTML – no in-universe period styling, since this is a practical reference document handed to a real player, not a fictional artifact (comparable in spirit to the `reference` style in `.claude/skills/generate-cards/SKILL.md`): readable serif body text, the character's name/role as a heading, portrait image inline, one `<section>`/page per character.
+Use simple, print-friendly HTML – no in-universe period styling, since this is a practical reference document handed to a real player, not a fictional artifact (comparable in spirit to the `reference` style in `.claude/skills/generate-cards/SKILL.md`): readable serif body text, the character's name/role as a heading, portrait floated top-right with text flowing around it (no caption, no contact line).
 
-The first line of the output must be the origin marker, followed by an empty line:
+The first line of each file must be the origin marker, followed by an empty line:
 
 ```
 <!-- generated from `Персонажи.md` -->
@@ -73,4 +73,4 @@ The first line of the output must be the origin marker, followed by an empty lin
 
 ## Step 6 – Report
 
-Report all three generated files to the user.
+Report `public/Роли.md`, `public/Роли.html`, and the list of generated files in `public/персонажи/` to the user.
