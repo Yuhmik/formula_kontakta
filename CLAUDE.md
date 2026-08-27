@@ -71,7 +71,7 @@ Each character entry follows this structure:
 - (optional) **Деньги:** X – monetary resources available
 - (optional) **Раздатка:** – printed materials and game items for the player
 - (optional) **Материалы в процессе игры:** – GM-only notes on which follow-up materials to hand out and when
-- **Костюм (в идеале):** – costuming guidance (plural **Костюмы:** for characters covering multiple people, e.g. location masters)
+- **Костюм (для примера):** – costuming guidance (plural **Костюмы:** for characters covering multiple people, e.g. location masters)
 - **Питомец (для примера):** – example animal for the alien-possession mechanic; illustrative, not mandatory
 - (optional) **Реквизит:** – special props needed for the role (e.g. conjurer's tricks)
 
