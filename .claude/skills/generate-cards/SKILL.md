@@ -297,6 +297,12 @@ function ConvertTo-HtmlEscaped([string]$s) {
 
 function Convert-InlineMarkdown([string]$s) {
     $s = ConvertTo-HtmlEscaped $s
+    # <br> is the one inline HTML tag authors write by hand inside table
+    # cells/paragraphs (a full line of raw HTML already passes through
+    # unescaped elsewhere in this pipeline - see the "<[a-zA-Z]" branch of
+    # ConvertTo-CardHtmlBody - but inline text like a table cell always
+    # goes through here and would otherwise get escaped to "&lt;br&gt;").
+    $s = $s -replace '&lt;br\s*/?&gt;', '<br>'
     $s = [regex]::Replace($s, '\*\*(.+?)\*\*', '<strong>$1</strong>')
     $s = [regex]::Replace($s, '(?<!\*)\*([^*]+?)\*(?!\*)', '<em>$1</em>')
     return $s

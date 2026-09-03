@@ -5,3 +5,4 @@
 *.url
 /.vs
 /материалы/*
+/.claude/skills/generate-cards/__pycache__/*
