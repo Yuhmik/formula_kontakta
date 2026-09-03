@@ -6,3 +6,4 @@
 /.vs
 /материалы/*
 /.claude/skills/generate-cards/__pycache__/*
+/.claude/skills/generate-roles/__pycache__/*

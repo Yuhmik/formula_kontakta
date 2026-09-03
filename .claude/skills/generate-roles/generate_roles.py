@@ -39,6 +39,18 @@ When re-running after editing Персонажи.md, diff the output against the
 committed public/ files and read the diff before trusting it — this script
 will make cross-references *consistent* with the documented rules, which
 may not match ad hoc choices baked into previously hand-tuned files.
+
+DIAGNOSTICS: the script cannot understand Russian grammar, so it cannot
+prove a sentence is correctly gendered — but it CAN mechanically detect the
+situations most likely to hide a mistake, grouped by type and printed
+after the file list (see print_diagnostics): a GENDER_RULE(...) condition
+naming a character absent from CHAR_CONFIG (always a bug — the condition
+silently evaluates false and its content vanishes); an inverted
+character's un-inverted surname form still present somewhere in the
+output (a strong signal some mention was never covered by a
+surname_regex/cross-reference pair); and an inverted character mentioned
+inside another character's own card (not necessarily wrong, but exactly
+where a missed pronoun is most likely — worth a human's eyes).
 """
 import argparse
 import os
@@ -48,6 +60,65 @@ import sys
 if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
+
+# Grouped by problem type: one explanation per type, printed once, followed
+# by the list of items it applies to (see print_diagnostics).
+DIAGNOSTICS = {
+    "unknown_name": [],
+    "leftover_form": [],
+    "co_mention": [],
+    "original_conflict": [],
+}
+DIAGNOSTIC_EXPLANATIONS = {
+    "unknown_name": "GENDER_RULE ссылается на персонажа, которого нет в CHAR_CONFIG — условие всегда ложно, содержимое пропадает:",
+    "leftover_form": "Похоже, пропущена гендерная замена — неинвертированная форма всё ещё есть в выводе:",
+    "co_mention": "Инвертированный персонаж упомянут в чужой карточке — проверьте согласование родов и падежей:",
+    "original_conflict": "Файлы <!-- original --> не перезаписаны:",
+}
+_REPORTED_UNKNOWN_CONDITIONS = set()
+
+
+def diag(kind, item):
+    DIAGNOSTICS[kind].append(item)
+
+
+def print_diagnostics():
+    for kind, items in DIAGNOSTICS.items():
+        if not items:
+            continue
+        print()
+        print(DIAGNOSTIC_EXPLANATIONS[kind])
+        for item in items:
+            print(f"  - {item}")
+
+
+def resolve_output_path(path, root):
+    # Every generated file's first line marks its origin ("<!-- generated
+    # from ... -->"); a hand-authored file's first line is "<!-- original
+    # -->" instead (see инструкции_по_генерации.md, "Маркировка
+    # происхождения файлов"). If a computed destination already exists and
+    # IS hand-authored, silently overwriting it would destroy hand-written
+    # content — redirect to "<name>_conflict.html" and flag it instead.
+    #
+    # Returns (path_to_write, protected_path). protected_path is the
+    # ORIGINAL intended path when a redirect happened, otherwise None — the
+    # per-character stale-file cleanup below MUST exclude protected_path
+    # from deletion, or that cleanup (which only knows "not the current
+    # output path" = "stale, delete it") destroys the very file this
+    # function exists to protect.
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8-sig") as f:
+                first_line = f.readline().strip()
+        except OSError:
+            first_line = ""
+        if first_line == "<!-- original -->":
+            base, ext = os.path.splitext(path)
+            conflict_path = f"{base}_conflict{ext}"
+            diag("original_conflict", os.path.relpath(path, root))
+            return conflict_path, path
+    return path, None
+
 
 CROSSPOL_PHRASES = [
     "Кросспол уместен.",
@@ -160,6 +231,16 @@ CHAR_CONFIG = [
         igroki_key="Строганов-ст", default_gender="М", invertible=True,
         filename_default="Строганов-ст", filename_inverted="Строганова-ст",
         nominative_default="Строганов-старший", nominative_inverted="Строганова-старшая",
+        # common_stem(nominative_default, nominative_inverted) would give
+        # the bare "Строганов" — shared with Строганов-мл, so diagnostics'
+        # co-mention check would flood every card that mentions the OTHER
+        # brother. A prefix like "Строганов-стар" doesn't work either:
+        # declined cross-reference forms insert letters between the surname
+        # and the modifier (dative "Строгановой-старшей", genitive
+        # "Строганова-старшего"), so requiring them adjacent misses most
+        # real mentions. The bare modifier is distinctive enough on its own
+        # within this corpus.
+        diag_stem="старш",
         surname_regex=[
             ("Строгановым-старшим", "Строгановой-старшей"),
             ("Строганове-старшем", "Строгановой-старшей"),
@@ -179,6 +260,7 @@ CHAR_CONFIG = [
         igroki_key="Строганов-мл", default_gender="М", invertible=True,
         filename_default="Строганов-мл", filename_inverted="Строганова-мл",
         nominative_default="Строганов-младший", nominative_inverted="Строганова-младшая",
+        diag_stem="младш",  # see Строганов-ст's diag_stem comment
         surname_regex=[
             ("Строгановым-младшим", "Строгановой-младшей"),
             ("Строганове-младшем", "Строгановой-младшей"),
@@ -326,6 +408,7 @@ for _cfg in CHAR_CONFIG:
     _cfg.setdefault("special_no_grammar", False)
     _cfg.setdefault("filename_default", _cfg["igroki_key"])
     _cfg.setdefault("filename_inverted", _cfg["igroki_key"])
+    _cfg.setdefault("diag_stem", None)
 
 
 # ── Игроки.md parsing ─────────────────────────────────────────────────────
@@ -426,6 +509,10 @@ def test_gender_condition(condition, char_config, igroki_rows):
                 None,
             )
             if cfg_match is None:
+                dedup_key = (name_hint, condition)
+                if dedup_key not in _REPORTED_UNKNOWN_CONDITIONS:
+                    _REPORTED_UNKNOWN_CONDITIONS.add(dedup_key)
+                    diag("unknown_name", f'"{name_hint}" — GENDER_RULE({condition})')
                 all_true = False
                 break
             if current_gender(cfg_match, igroki_rows) != want_gender:
@@ -663,9 +750,11 @@ def build_characters(root, filter_key=None):
     if len(blocks) != len(CHAR_CONFIG):
         print(
             f"ВНИМАНИЕ: в Персонажи.md найдено {len(blocks)} блоков персонажей, "
-            f"а в CHAR_CONFIG описано {len(CHAR_CONFIG)}. Обновите CHAR_CONFIG "
-            "в generate_roles.py (и, при необходимости, $charConfig в "
-            "generate-cards/SKILL.md).",
+            f"а в CHAR_CONFIG описано {len(CHAR_CONFIG)}. Персонажи сопоставляются "
+            "по позиции, так что при рассинхронизации данные всех персонажей "
+            "после несовпадения перепутаны. Обновите CHAR_CONFIG в generate_roles.py "
+            "(и, при необходимости, CHAR_CONFIG в generate-cards/generate_cards.py) "
+            "прежде чем доверять этому запуску.",
             file=sys.stderr,
         )
 
@@ -800,7 +889,83 @@ def build_characters(root, filter_key=None):
         ch.contact_line = contact_line
         characters.append(ch)
 
+    run_cross_reference_diagnostics(characters, active_inversions)
+
     return characters, footer_lines
+
+
+def common_stem(a, b, min_len=4):
+    n = 0
+    for ca, cb in zip(a, b):
+        if ca != cb:
+            break
+        n += 1
+    return a[:n] if n >= min_len else None
+
+
+def run_cross_reference_diagnostics(characters, active_inversions):
+    # Mechanical stand-ins for "does this read correctly" — the script
+    # can't judge grammar, but it can notice the two situations most
+    # likely to hide a missed gender substitution: the character's OWN
+    # un-inverted surname form still present anywhere (a near-certain
+    # miss), and any mention of an inverted character inside someone
+    # ELSE's card (not necessarily wrong, but exactly where a stray
+    # pronoun belonging to them is most likely to have been missed — see
+    # this file's module docstring for the Раскольниченко/Строганов-мл
+    # incident that prompted this).
+    scan_text = {
+        ch.igroki_key: "\n".join(
+            [ch.heading, ch.subtitle] + ch.pub_paragraphs + ch.bio_paragraphs
+        )
+        for ch in characters
+    }
+
+    for cfg in active_inversions:
+        default_form = cfg["nominative_default"]
+        inverted_form = cfg["nominative_inverted"]
+        if default_form == inverted_form:
+            continue  # indeclinable name (e.g. Валемонте) - nothing to tell apart
+
+        # Leftover-form warning: the bare nominative catches an unconverted
+        # mention written in the base form, and each surname_regex FROM
+        # pattern catches a still-unconverted DECLINED form specifically
+        # (genitive/dative/etc) — every one of these patterns is supposed
+        # to have been substituted away by grammar(), everywhere, so any
+        # literal match remaining is either a genuinely missed mention or
+        # (much rarer) a false positive from protected/ref: text that's
+        # deliberately exempt from substitution.
+        leftover_patterns = [re.escape(default_form)] + [
+            pat for pat, _ in cfg["surname_regex"]
+        ]
+        for ch in characters:
+            text = scan_text[ch.igroki_key]
+            for pat in leftover_patterns:
+                m = re.search(pat, text)
+                if not m:
+                    continue
+                start, end = max(0, m.start() - 25), min(len(text), m.end() + 25)
+                snippet = text[start:end].replace("\n", " ⏎ ")
+                diag(
+                    "leftover_form",
+                    f'{cfg["igroki_key"]} в карточке "{ch.igroki_key}": '
+                    f"«{pat}» — …{snippet}…",
+                )
+                break  # one hit per card is enough signal, avoid pile-up
+
+        # Co-mention info: broader stem match (catches declined forms like
+        # "Строганова-младшего" or "Ласневскому" that don't literally equal
+        # either nominative spelling) - not proof of a bug, just the exact
+        # spot where a missed pronoun for the OTHER character is most
+        # likely, so it's worth a human's eyes regardless of whether the
+        # surname form itself looks converted.
+        stem = cfg["diag_stem"] or common_stem(default_form, inverted_form)
+        if not stem:
+            continue
+        for ch in characters:
+            if ch.igroki_key == cfg["igroki_key"]:
+                continue
+            if stem in scan_text[ch.igroki_key]:
+                diag("co_mention", f'{cfg["igroki_key"]} — карточка "{ch.igroki_key}"')
 
 
 # ── Inline markdown → HTML (bold/italic/links) ────────────────────────────
@@ -1030,29 +1195,39 @@ def main():
 
     os.makedirs(out_root, exist_ok=True)
     if not args.character:
-        with open(os.path.join(out_root, "Роли.md"), "w", encoding="utf-8", newline="\n") as f:
+        roles_md_path, _ = resolve_output_path(os.path.join(out_root, "Роли.md"), root)
+        with open(roles_md_path, "w", encoding="utf-8", newline="\n") as f:
             f.write(roles_md)
-        with open(os.path.join(out_root, "Роли.html"), "w", encoding="utf-8", newline="\n") as f:
+        roles_html_path, _ = resolve_output_path(os.path.join(out_root, "Роли.html"), root)
+        with open(roles_html_path, "w", encoding="utf-8", newline="\n") as f:
             f.write(roles_html)
-        print(os.path.join(os.path.relpath(out_root, root), "Роли.md"))
-        print(os.path.join(os.path.relpath(out_root, root), "Роли.html"))
+        print(os.path.relpath(roles_md_path, root))
+        print(os.path.relpath(roles_html_path, root))
 
     persona_dir = os.path.join(out_root, "персонажи")
     os.makedirs(persona_dir, exist_ok=True)
     for ch in characters:
         html = render_persona_html(ch)
-        path = os.path.join(persona_dir, f"{ch.file_key}.html")
+        path, protected_path = resolve_output_path(
+            os.path.join(persona_dir, f"{ch.file_key}.html"), root
+        )
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write(html)
-        print(os.path.join(os.path.relpath(persona_dir, root), f"{ch.file_key}.html"))
+        print(os.path.relpath(path, root))
 
         # Stale-file cleanup: if the character's gender flipped since the
         # last run, the old declined filename is now orphaned — remove it
         # (mirrors generate-cards' same cleanup for CARD_BEGIN outputs).
         for stale_key in (ch.igroki_key, ch.filename_default, ch.filename_inverted):
             stale_path = os.path.join(persona_dir, f"{stale_key}.html")
-            if stale_path != path and os.path.exists(stale_path):
+            if (
+                stale_path != path
+                and stale_path != protected_path
+                and os.path.exists(stale_path)
+            ):
                 os.remove(stale_path)
+
+    print_diagnostics()
 
 
 if __name__ == "__main__":

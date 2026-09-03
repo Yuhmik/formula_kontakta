@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Python port of the /generate-cards PowerShell script (see SKILL.md).
+"""Default implementation of the /generate-cards skill (see SKILL.md).
 
 Extracts CARD_BEGIN(name, path/, style[, copies[, columns]]) ... CARD_END
 blocks from source .md files and writes each card to path/name.html.
@@ -9,9 +9,22 @@ Usage:
     python generate_cards.py <CardName>      # regenerate only the named card
 
 Run from the project root (or pass --root <path>).
-This is a parallel, independently maintained implementation of the same
-generation rules documented in SKILL.md and инструкции_по_генерации.md.
-If you change the rules in one place, update the other.
+CHAR_CONFIG below is the canonical gender-substitution config — SKILL.md no
+longer embeds its own copy, so there is nothing else to keep in sync here.
+The generation RULES themselves (styles, markdown syntax, gender-agreement
+principles) are documented in SKILL.md and инструкции_по_генерации.md; if
+you change a rule, update this script to match (or vice versa) and keep
+both docs' prose in sync with what the code actually does.
+
+DIAGNOSTICS: the script cannot understand Russian grammar, so it cannot
+prove a sentence is correctly gendered — but it CAN mechanically detect the
+two situations most likely to hide a mistake, grouped by type and printed
+after the file list (see print_diagnostics): a GENDER_RULE(...) condition
+naming a character absent from CHAR_CONFIG (always a bug — the condition
+silently evaluates false and its content vanishes); and an inverted
+character's un-inverted surname form still present somewhere in the
+output (a strong signal some mention was never covered by a
+surname_regex/cross-reference pair).
 """
 import argparse
 import os
@@ -22,11 +35,67 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 
+# Grouped by problem type: one explanation per type, printed once, followed
+# by the list of items it applies to (see print_diagnostics).
+DIAGNOSTICS = {"unknown_name": [], "leftover_form": [], "original_conflict": []}
+DIAGNOSTIC_EXPLANATIONS = {
+    "unknown_name": "GENDER_RULE ссылается на персонажа, которого нет в CHAR_CONFIG — условие всегда ложно, содержимое пропадает:",
+    "leftover_form": "Похоже, пропущена гендерная замена — неинвертированная форма всё ещё есть в выводе:",
+    "original_conflict": "Файлы <!-- original --> не перезаписаны:",
+}
+_REPORTED_UNKNOWN_CONDITIONS = set()
+
+
+def diag(kind, item):
+    DIAGNOSTICS[kind].append(item)
+
+
+def print_diagnostics():
+    for kind, items in DIAGNOSTICS.items():
+        if not items:
+            continue
+        print()
+        print(DIAGNOSTIC_EXPLANATIONS[kind])
+        for item in items:
+            print(f"  - {item}")
+
+
+def resolve_output_path(path, root):
+    # Every generated file's first line marks its origin ("<!-- generated
+    # from ... -->"); a hand-authored file's first line is "<!-- original
+    # -->" instead (see инструкции_по_генерации.md, "Маркировка
+    # происхождения файлов"). If a card's declared destination already
+    # exists and IS hand-authored, something is misconfigured (wrong path
+    # in CARD_BEGIN, or a name collision with a real document) — silently
+    # overwriting it would destroy hand-written content, so redirect to
+    # "<name>_conflict.html" and flag it instead.
+    #
+    # Returns (path_to_write, protected_path). protected_path is the
+    # ORIGINAL intended path when a redirect happened, otherwise None —
+    # callers with their own stale-file cleanup MUST exclude protected_path
+    # from deletion, or that cleanup (which only knows "not the current
+    # output path" = "stale, delete it") destroys the very file this
+    # function exists to protect.
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8-sig") as f:
+                first_line = f.readline().strip()
+        except OSError:
+            first_line = ""
+        if first_line == "<!-- original -->":
+            base, ext = os.path.splitext(path)
+            conflict_path = f"{base}_conflict{ext}"
+            diag("original_conflict", os.path.relpath(path, root))
+            return conflict_path, path
+    return path, None
+
+
 VALID_STYLES = {"document", "handwritten", "reference"}
 
 # ── Gender-inversion config ──────────────────────────────────────────────
-# Mirrors $charConfig in SKILL.md. Keep the two in sync when genders change
-# or new invertible characters are added.
+# Update this table when a character's gender changes for a run, or when a
+# new invertible character is added — it is the single source of truth for
+# gender substitution (see the module docstring: nothing else mirrors it).
 #
 # igroki_key          = key in персонаж column of Игроки.md
 # default_gender      = gender used in source files (Персонажи.md, ...)
@@ -192,6 +261,10 @@ def test_gender_condition(condition, char_config, igroki_text):
                 None,
             )
             if cfg_match is None:
+                dedup_key = (name_hint, condition)
+                if dedup_key not in _REPORTED_UNKNOWN_CONDITIONS:
+                    _REPORTED_UNKNOWN_CONDITIONS.add(dedup_key)
+                    diag("unknown_name", f'"{name_hint}" — GENDER_RULE({condition})')
                 all_true = False
                 break
             if get_current_gender(cfg_match, igroki_text) != want_gender:
@@ -200,6 +273,33 @@ def test_gender_condition(condition, char_config, igroki_text):
         if all_true:
             return True
     return False
+
+
+def check_leftover_gender_forms(card_label, text, active_inversions):
+    # Every surname_regex FROM pattern (plus the bare nominative_default)
+    # is supposed to have been substituted away by now, everywhere it's
+    # currently active — a literal match still present is either a
+    # genuinely missed mention (most likely: a new word form or
+    # cross-reference not yet added to $charConfig/CHAR_CONFIG) or, much
+    # more rarely, text a GENDER_RULE branch deliberately protected. See
+    # generate-roles/generate_roles.py's module docstring for the
+    # Раскольниченко/Строганов-мл incident that motivated this check.
+    for cfg in active_inversions:
+        patterns = [re.escape(cfg["nominative_default"])] + [
+            pat for pat, _ in cfg["surname_regex"]
+        ]
+        for pat in patterns:
+            m = re.search(pat, text)
+            if not m:
+                continue
+            start, end = max(0, m.start() - 25), min(len(text), m.end() + 25)
+            snippet = text[start:end].replace("\n", " ⏎ ")
+            diag(
+                "leftover_form",
+                f'{cfg["igroki_key"]} в карточке "{card_label}": '
+                f"«{pat}» — …{snippet}…",
+            )
+            break  # one hit per card is enough signal, avoid pile-up
 
 
 def resolve_gender_rules(text, char_config, igroki_text):
@@ -593,6 +693,8 @@ def main():
             for i, ph in enumerate(placeholders):
                 body = body.replace(f"@@GR{i}@@", ph)
 
+            check_leftover_gender_forms(name, body, active_inversions)
+
             conv_html, uses_mermaid = convert_card_html_body(body)
             wrap = get_card_wrapper(style, uses_mermaid, copies, columns)
 
@@ -629,7 +731,9 @@ def main():
 
             out_dir = os.path.join(root, directory)
             os.makedirs(out_dir, exist_ok=True)
-            out_file = os.path.join(out_dir, f"{name}.html")
+            out_file, protected_path = resolve_output_path(
+                os.path.join(out_dir, f"{name}.html"), root
+            )
             with open(out_file, "w", encoding="utf-8", newline="\n") as f:
                 f.write(full_html)
             generated.append(os.path.relpath(out_file, root))
@@ -637,7 +741,7 @@ def main():
             for stale_name in dict.fromkeys([orig_name, name]):
                 for ext in (".md", ".html"):
                     stale = os.path.join(out_dir, f"{stale_name}{ext}")
-                    if stale != out_file and os.path.exists(stale):
+                    if stale != out_file and stale != protected_path and os.path.exists(stale):
                         os.remove(stale)
 
         for m in NO_STYLE_PATTERN.finditer(text):
@@ -662,6 +766,8 @@ def main():
             print(f"  {s}")
     if not generated and not skipped:
         print("Карточки не найдены.")
+
+    print_diagnostics()
 
 
 if __name__ == "__main__":

@@ -5,7 +5,37 @@ description: Generate or refresh public/Роли.md (the public character list),
 
 Generate `public/Роли.md`, `public/Роли.html`, and one HTML file per character in `public/персонажи/` from the project source files.
 
-## Step 1 – Read the generation rules
+## Default: run the script
+
+Run from the project root:
+
+```
+python .claude/skills/generate-roles/generate_roles.py
+```
+
+Pass a character's `Игроки.md` key (e.g. `Строганов-мл`) to regenerate only that one character's card, skipping `Роли.md`/`Роли.html`.
+
+Check the script's full output every time — not just the generated-file list, but a block-count mismatch warning (printed to stderr, before generation even starts) and diagnostics (printed after, grouped by type — see the script's module docstring and `print_diagnostics`). Never just relay these to the user as-is: read the specific text they point at in `Персонажи.md`, and come back with either a fix already drafted or a concrete finding, not a raw log dump.
+
+- **Block-count mismatch** (stderr, "в Персонажи.md найдено N блоков... а в CHAR_CONFIG описано M") — a character was added or removed in `Персонажи.md`. Every character after the mismatch is now paired with the wrong `CHAR_CONFIG` entry by position, so the whole run's output is unreliable until this is fixed. Draft the matching `CHAR_CONFIG` addition/removal (an existing entry is a template) and propose it before trusting anything else this run produced.
+- **"GENDER_RULE ссылается на персонажа, которого нет в CHAR_CONFIG"** — always a bug. Read the named condition in `Персонажи.md`: if it's a typo of an existing character's name, propose fixing the source; if it's a genuinely new invertible character, draft the `CHAR_CONFIG` entry for them.
+- **"Похоже, пропущена гендерная замена"** — read the flagged card and find the un-inverted form in context. Draft the specific `surname_regex` pair (or compound phrase, if it's a cross-reference — see the Раскольниченко/Строганов-мл case in the script's docstring for the pattern) and propose adding it to that character's `CHAR_CONFIG` entry.
+- **"Инвертированный персонаж упомянут в чужой карточке"** — read that paragraph and check pronoun/adjective agreement yourself. If it's already correct, say so and move on. If it's wrong, draft the missing pair the same way as above.
+- **"Целевой файл уже существует и помечен как `<!-- original -->`"** — the script refused to overwrite a hand-authored file and wrote to `*_conflict.html` instead (see `resolve_output_path`). This normally means a character's row in `Игроки.md` was renamed/retyped in a way that makes its computed filename collide with an unrelated real document — read both files and figure out which is right; don't leave the `*_conflict.html` sitting there once resolved.
+
+Propose each fix as a concrete edit to `generate_roles.py` (not a description of what should change), apply it once the user confirms, and re-run the script to verify the diagnostic is actually gone before reporting the run as done.
+
+## When to fall back to manual generation
+
+`generate_roles.py` is a deterministic, non-LLM implementation: a fixed table of word-form substitutions (`CHAR_CONFIG`), not real language understanding. It cannot correctly gender a brand-new sentence, or a new cross-reference to an invertible character, that it hasn't seen a matching pattern for — see the script's own module docstring for the specific incident (Раскольниченко/Строганов-мл) that shaped this. Fall back to the manual process below (Steps 1–6, which use your own understanding of Russian instead of pattern matching) when:
+
+- a new character is added to `Персонажи.md` — the script pairs character blocks to `CHAR_CONFIG` by position; add a matching entry there first, or it will warn about a count mismatch and misalign;
+- a diagnostic fires that you can't resolve by adding a `CHAR_CONFIG` entry/pair;
+- you need to hand-fix or double-check just ONE flagged character's card — Step 5 below can be applied to a single character without a full regeneration.
+
+## Manual generation (fallback)
+
+### Step 1 – Read the generation rules
 
 Read `инструкции_по_генерации.md` in full. Authoritative sections:
 
@@ -16,7 +46,7 @@ Read `инструкции_по_генерации.md` in full. Authoritative se
 
 Apply these rules as written – do not rely on remembered or cached versions.
 
-## Step 2 – Read the source data
+### Step 2 – Read the source data
 
 Read these files in full:
 
@@ -24,7 +54,7 @@ Read these files in full:
 - **`Игроки.md`** — for each character: `пол` (gender for this run), `имя` (player name, if filled), contact handle (`игрок – контакт`), and application status (`статус заявки`).
 - **`материалы/графика/персонажи/портреты.md`** — for each character select the portrait block whose heading matches the character name and gender marker (`М` or `Ж`) from `Игроки.md`. Characters with only one gender variant always use that variant.
 
-## Step 3 – Generate `public/Роли.md`
+### Step 3 – Generate `public/Роли.md`
 
 Apply the rules from "Генерация публичного списка ролей" and "Смена гендера персонажа". Write the result to `public/Роли.md`.
 
@@ -34,7 +64,7 @@ The first line of the output must be the origin marker, followed by an empty lin
 <!-- generated from `Персонажи.md` -->
 ```
 
-## Step 4 – Generate `public/Роли.html`
+### Step 4 – Generate `public/Роли.html`
 
 Same character order, subtitles, `PUB_INFO` paragraphs, and contact/status line as `public/Роли.md` from Step 3 – reuse that text verbatim rather than recomputing it, with these differences:
 
@@ -49,7 +79,7 @@ The first line of the output must be the origin marker, followed by an empty lin
 <!-- generated from `Персонажи.md` -->
 ```
 
-## Step 5 – Generate `public/персонажи/<персонаж>.html`
+### Step 5 – Generate `public/персонажи/<персонаж>.html`
 
 Per "Персонажные карточки", build one card per character and write each to its own file `public/персонажи/<персонаж>.html`, where `<персонаж>` is that character's value in the `персонаж` column of `Игроки.md`. Each file is a single A4 print page (`@page { size: A4; }`).
 
@@ -71,6 +101,6 @@ The first line of each file must be the origin marker, followed by an empty line
 <!-- generated from `Персонажи.md` -->
 ```
 
-## Step 6 – Report
+### Step 6 – Report
 
 Report `public/Роли.md`, `public/Роли.html`, and the list of generated files in `public/персонажи/` to the user.
