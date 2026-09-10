@@ -1024,18 +1024,18 @@ ROLES_HTML_CSS = """    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: Georgia, "Times New Roman", serif;
       color: #1a1a1a;
-      font-size: 10pt;
-      line-height: 1.3;
-      padding: 10mm;
+      font-size: 7.4pt;
+      line-height: 1.24;
+      column-count: 2;
+      column-gap: 6mm;
     }
-    h1 { font-size: 16pt; font-weight: 700; text-align: center; margin-bottom: 6mm; }
-    h2 { font-size: 11.5pt; font-weight: 700; margin-bottom: 1mm; }
-    .subtitle { font-style: italic; margin-bottom: 2mm; }
-    p { margin-bottom: 1.5mm; text-align: justify; }
-    .contact { font-style: italic; margin-top: 1mm; }
-    section.character { break-inside: avoid; page-break-inside: avoid; margin-bottom: 4mm; padding-bottom: 3mm; border-bottom: 0.5pt solid #999; }
-    section.character:last-of-type { border-bottom: none; }
-    @page { size: A4; margin: 12mm 15mm; }"""
+    h1 { font-size: 11pt; font-weight: 700; text-align: center; margin-bottom: 1mm; column-span: all; }
+    h2 { font-size: 8.9pt; font-weight: 700; margin-bottom: 0.4mm; }
+    .subtitle { font-style: italic; margin-bottom: 0.8mm; }
+    p { margin-bottom: 0.8mm; text-align: justify; }
+    .contact { font-style: italic; margin-top: 0.4mm; }
+    section.character { break-inside: avoid; page-break-inside: avoid; margin-bottom: 2mm; }
+    @page { size: A4; margin: 9mm 11mm; }"""
 
 
 def render_roles_html(characters):
@@ -1073,7 +1073,7 @@ def render_roles_html(characters):
 </head>
 
 <body>
-  <h1>Роли</h1>
+  <h1>РИ Формула Контакта. Дилижан, 2026. Список ролей</h1>
 
 {body}
 </body>

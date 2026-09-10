@@ -37,10 +37,10 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 @page { size: A4; margin: 10mm; }
 .sheet.copies { padding: 0; }
 @media screen { .sheet.copies { padding: 10mm; } }
-.copies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+.copies-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 0; }
 .copy-cell { padding: 10mm; border-right: 1pt dashed #999; border-bottom: 1pt dashed #999; break-inside: avoid; page-break-inside: avoid; }
-.copy-cell:nth-child(2n) { border-right: none; }
-.copy-cell:nth-last-child(-n+2) { border-bottom: none; }
+.copy-cell:nth-child(1n) { border-right: none; }
+.copy-cell:nth-last-child(-n+1) { border-bottom: none; }
   </style>
 
 </head>

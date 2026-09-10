@@ -1,0 +1,160 @@
+<!-- original -->
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <title>Адреса на конверт</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="letter.css">
+  <style>
+    @page {
+      size: A4;
+      margin: 10mm 8mm;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    .sheet {
+      width: 194mm;
+      margin: 0 auto;
+    }
+
+    .gm-note {
+      margin-bottom: 4mm;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 36mm;
+    }
+
+    .card {
+      border: 1pt dashed #8a7a5f;
+      margin: -0.5pt;
+      padding: 3mm 4mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .card .slug {
+      font-family: "Old Standard TT", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-size: 7.5pt;
+      font-style: italic;
+      color: #8a7a5f;
+      text-indent: 0;
+      margin-bottom: 2mm;
+      letter-spacing: 0.02em;
+    }
+
+    .card .envelope-addressee {
+      font-size: 10.5pt;
+      font-weight: 700;
+      text-indent: 0;
+      text-align: left;
+      line-height: 1.3;
+      margin-bottom: 1.5mm;
+    }
+
+    .card .envelope-place {
+      font-size: 9.5pt;
+      font-style: italic;
+      text-indent: 0;
+      text-align: left;
+      line-height: 1.25;
+    }
+
+    .card .envelope-from {
+      margin-top: 3mm;
+      font-size: 9.5pt;
+      text-indent: 0;
+      text-align: left;
+      color: #4a3f2a;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sheet">
+
+    <!--p class="gm-note">GM: адресные карточки для надписания входящих конвертов</p-->
+
+    <div class="cards-grid">
+
+      <div class="card">
+        <!--p class="slug">краузе-ответ-академии</p-->
+        <p class="envelope-addressee">Господину доктору<br>Иоганну Краузе,</p>
+        <p class="envelope-place">в N&#8209;ский уезд.</p>
+        <!--p class="envelope-from">От Императорской Академии наук, С.-Петербург.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">краузе-ответ-компании</p-->
+        <p class="envelope-addressee">Господину доктору<br>Иоганну Краузе,</p>
+        <p class="envelope-place">в N&#8209;ский уезд.</p>
+        <!--p class="envelope-from">От Правления Прусской Горнопромышленной Компании.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">валемонте-приглашение</p-->
+        <p class="envelope-addressee">Иностранному гостю,<br>графу Валемонте.</p>
+        <p class="envelope-place">в N&#8209;ский уезд.</p>
+        <!--p class="envelope-from">От Статс-секретаря Кабинета Её Императорского Величества.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">громов-архиерейское_предупреждение_о_ефросинии</p-->
+        <p class="envelope-addressee">Іерею Громову,</p>
+        <p class="envelope-place">Благочинному N&#8209;скаго уѣзда.</p>
+        <!--p class="envelope-from">От Архиепископа N-ского и Поволжского.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">громов-архиерейское_предупреждение_за_вред_промыслам</p-->
+        <p class="envelope-addressee">Іерею Громову,</p>
+        <p class="envelope-place">Благочинному N&#8209;скаго уѣзда.</p>
+        <!--p class="envelope-from">От Архиепископа N-ского и Поволжского.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">громов-архиерейское_предупреждение_за_суеверия</p-->
+        <p class="envelope-addressee">Іерею Громову,</p>
+        <p class="envelope-place">Благочинному N&#8209;скаго уѣзда.</p>
+        <!--p class="envelope-from">От Архиепископа N-ского и Поволжского.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">строганов-приглашение-управляющим</p-->
+        <p class="envelope-addressee">Господину артельщику<br>Строганову-старшему,</p>
+        <p class="envelope-place">в N&#8209;ский уезд.</p>
+        <!--p class="envelope-from">От Правления Прусской Горнопромышленной Компании.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">горихвостов-письмо-жуковского (академия / газета), мужская версия</p-->
+        <p class="envelope-addressee">Его Благородiю<br>Горихвостову-Чаадаевскому</p>
+        <p class="envelope-place">В N&#8209;скій уѣздъ, имѣніе Горихвостовка.</p>
+        <!--p class="envelope-from">От В. А. Жуковского.</p-->
+      </div>
+
+      <div class="card">
+        <!--p class="slug">горихвостов-письмо-жуковского (академия / газета), женская версия</p-->
+        <p class="envelope-addressee">Ея благородію<br>Горихвостовой-Чаадаевской</p>
+        <p class="envelope-place">В N&#8209;скій уѣздъ, имѣніе Горихвостовка.</p>
+        <!--p class="envelope-from">От В. А. Жуковского.</p-->
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

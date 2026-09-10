@@ -10,6 +10,18 @@ CARD_BEGIN(краузе-перевод-журнала, public/letters/, document
 
 **Перевод с немецкого. Полевой журнал доктора И. Краузе, выборочно.**
 
+**Российская Академия наук:**
+
+Сегодня я имел аудиенцию в канцелярии Академии наук, и этот приём превзошёл все ожидания – не любезностью, но её полным отсутствием. Мои ботанические коллекции не вызвали у чиновника интереса: здесь во всяком любопытстве подозревают шпионаж, а во всякой учёности – вольнодумство.
+
+Надворный советник прямо дал мне понять, что главнейшая добродетель ученого в России – это благонадежность. Понизив голос, он предупредил: появление в печати недозволенных сведений грозит вызовом на допрос и высылкой из страны. Что именно почитается недозволенным, определить заранее невозможно, и в том, кажется, весь смысл.
+
+После подавления смуты 1825 года здешняя бюрократия пытается подчинить любую свободную мысль полицейскому надзору, и Академия не избежала сих оков: от исследователя ждут прежде всего деклараций о «государственной пользе» и следования министерским предписаниям.
+
+**В российской провинции:**
+
+От дороги вынес твёрдое знание, что рессоры здесь роскошь неведомая. От столичной заставы колея глубиною по ступицу, а после дождей – сплошное месиво, именуемое "распутицей"; после трёх дней пути кости ноют так, будто их пересчитали заново. Зато еда выше всякой похвалы: такого гуся и такой ухи не подавали мне ни в Саксонии, ни в Пруссии. Одна беда – мера в питье здесь понятие незнакомое: хозяин почитает гостя обиженным, покуда тот не выпил сверх всякой разумной потребности. Отказ принимают за обиду, согласие – за повод к новой чарке.
+
 **Comportamentum anomalum (Поведение противуестественное), из наблюдений:**
 
 № 12. Ворона и дворовая собака, находясь в четверти версты одна от другой, двигались к одной точке на краю урочища. Проследил обеих. Пути сошлись. Весьма необычное дело.
@@ -45,6 +57,20 @@ Entsandt von der Freiberger Bergakademie, mit Empfehlungsschreiben der Kaiserlic
 Anno 1835
 
 <div style="break-after: page; page-break-after: always;"></div>
+
+**Russische Akademie der Wissenschaften:**
+
+<img src="../графика/краузе_чиновник.png">
+
+Heute ward mir eine Audienz in der Kanzlei der Akademie der Wissenschaften zuteil, doch übertraf dieser Empfang alle Erwartungen — nicht durch Wohlwollen, sondern durch das gänzliche Fehlen desselben. Meine botanischen Aufsammlungen vermochten beim Beamten keinerlei Interesse zu erwecken; man wittert hier in jeglicher Vorwitzigkeit Spionage und in jedweder Gelehrsamkeit Freigeisterei.
+
+Der Hofrat gab mir unverhohlen zu verstehen, dass die vorzüglichste Tugend eines Naturforschers in Russland die Staatstreue sei. Mit gedämpfter Stimme erklärte er mir ohne Umschweife: Das Erscheinen „unstatthafter“ Nachrichten im Druck drohe damit, dass man zur Vernehmung vorgeladen oder gar in Verwahrung genommen werde. Was genau als unstatthaft erachtet wird, lässt sich im Voraus schwerlich bestimmen, und darin scheint der ganze Zweck zu liegen. Von der Furcht vor Aufruhr ergriffen, sucht die hiesige Bürokratie die Naturkunde der polizeilichen Aufsicht zu unterwerfen; vom Forscher erwartet man daher lediglich Erklärungen über den „Staatsnutzen“ und das getreue Befolgen der ministerialen Zirkulare.
+
+**In der russischen Provinz:**
+
+<img src="../графика/краузе_дороги.png" alt="Straßen in Russland" style="width:100%; margin:3mm 0;">
+
+Aus der Reise habe ich eine unumstößliche Erkenntnis davongetragen: Wagenfedern sind hier ein gänzlich unbekannter Luxus. Bereits von der Zolleinnehmerei an zeigt sich die Fahrspur bis an die Radnabe vertieft, und nach ergiebigen Regenfgüssen verwandelt sich das Terrain in einen bodenlosen Morast, den man keineswegs grundlos als *Rasputiza* bezeichnet. Nach dreitägiger Passage schmerzen die Gebeine dergestalt, als wären sie aufs Neue traktiert worden. Dahingegen verdient die Tafel ein uneingeschränktes Lob: Einen derart vorzüglichen Gänsebraten nebst einer so köstlichen Fischsuppe hat man mir weder in Sachsen noch in Preußen kredenzt. Einziges Übel bleibt die gänzliche Unkenntnis jedweden Maßes beim Umtrunk: Der Wirt wähnt den Gast erst dann gebührend geehrt, wenn dieser weit über jedes vernünftige Bedürfnis hinaus zugesprochen hat. Eine Ablehnung wird als Kränkung gedeutet, eine Zusage hingegen als Anlass zu einem erneuten Becher.
 
 **Comportamentum anomalum (aus den Beobachtungen):**
 

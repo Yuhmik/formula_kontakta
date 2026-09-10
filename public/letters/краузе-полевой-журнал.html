@@ -1,4 +1,5 @@
-<!-- generated from `краузе-полевой-журнал_template.md` CARD "краузе-полевой-журнал" -->
+<!-- original -->
+<!-- originated from `краузе-полевой-журнал_template.md` CARD "краузе-полевой-журнал" but contains custom formatting-->
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -14,8 +15,8 @@ html, body { background: #f4ecd8; }
 body {
   font-family: "Caveat", cursive;
   color: #2b2013;
-  font-size: 17pt;
-  line-height: 1.3;
+  font-size: 18pt;
+  line-height: 1.32;
 }
 .page { margin: 0 auto; background: #f4ecd8; }
 h1 { font-weight: 700; font-size: 26pt; text-align: left; margin: 0 0 4mm 0; }
@@ -33,9 +34,32 @@ strong { font-weight: 700; }
 em { font-style: italic; }
 p, h1, h2, img, table, pre, li { break-inside: avoid; page-break-inside: avoid; }
 h1, h2 { break-after: avoid; page-break-after: avoid; }
+.titlepage { height: 190mm; padding: 5mm; border: 1pt solid #5a4a2f; display: flex; align-items: center; justify-content: center; break-after: page; page-break-after: always; }
+.titlepage .tp-frame { width: 100%; height: 100%; border: 0.6pt solid #5a4a2f; padding: 10mm 8mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.tp-eyebrow { font-size: 13pt; letter-spacing: 0.3em; text-transform: uppercase; color: #5a4a2f; margin-bottom: 5mm; }
+.titlepage h1 { font-size: 24pt; line-height: 1.15; text-align: center; margin: 0 0 4mm 0; }
+.tp-subtitle { font-style: italic; font-size: 15pt; margin-bottom: 4mm; }
+.tp-flourish { font-size: 16pt; color: #5a4a2f; margin: 3mm 0; }
+.tp-rule { width: 28mm; border-top: 0.8pt solid #5a4a2f; margin: 4mm 0; }
+.tp-author { font-size: 19pt; font-weight: 700; margin-bottom: 1mm; }
+.tp-role { font-size: 14pt; margin-bottom: 4mm; }
+.tp-affil { font-size: 13pt; line-height: 1.4; margin-bottom: 6mm; max-width: 85mm; }
+.tp-year { font-size: 15pt; letter-spacing: 0.15em; }
+.entry { position: relative; min-height: 190mm; padding-top: 1mm; background-image: repeating-linear-gradient(to bottom, transparent, transparent 8.08mm, rgba(90, 74, 47, 0.38) 8.08mm, rgba(90, 74, 47, 0.38) 8.38mm); }
+.entry h2 { margin-top: 0; }
+.entry figure { margin: 0 0 3mm 0; }
+.entry figure.float-left { float: left; margin: 0 4mm 2mm 0; }
+.entry figure.float-right { float: right; margin: 0 0 2mm 4mm; }
+.entry figure img { display: block; width: 100%; }
+.entry figcaption { font-size: 11pt; font-style: italic; color: #5a4a2f; text-align: center; margin-top: 1mm; line-height: 1.2; }
+.margin-note { float: right; width: 25mm; margin: 0 0 2mm 3mm; font-size: 12pt; line-height: 1.15; color: #6b3227; transform: rotate(-7deg); }
+.margin-note.left { float: left; margin: 0 3mm 2mm 0; }
+.diagonal { display: inline-block; transform: rotate(-2.5deg); transform-origin: left top; }
+.aside { border-left: 1pt solid #8a7a5f; padding: 2mm 3mm; margin: 5mm 0mm 3mm -2mm; transform: rotate(-1deg); color: #4a2f22; }
+.pagebreak { break-after: page; page-break-after: always; }
 @media print { html, body { background: #fff; } .page { background: transparent; } }
-@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 210mm; min-height: 297mm; padding: 18mm 20mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
-@page { size: A4; margin: 10mm; }
+@media screen { body { padding: 10mm 0; background: #d8cdb4; } .page { width: 148mm; min-height: 210mm; padding: 10mm 10mm 10mm 25mm; box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3); } }
+@page { size: A5; margin: 10mm 10mm 10mm 25mm; }
   </style>
 
 </head>
@@ -43,30 +67,141 @@ h1, h2 { break-after: avoid; page-break-after: avoid; }
 <body>
   <div class="page">
 <!-- *GM: раздатка Краузе с начала игры · подлинный полевой журнал: обложка по-немецки, внутри предупреждение по-русски (не читать без знания немецкого в загрузе) · содержание тождественно краузе-перевод-журнала – до перевода недоступно тем, у кого немецкий не отмечен* -->
-<h1>Feldjournal</h1>
-<p><em>Naturhistorische und geognostische Beobachtungen, angestellt während einer Reise durch das europäische Russland</em></p>
-<p>Dr. Johann Krause, Doctor der Naturgeschichte</p>
-<p>Entsandt von der Freiberger Bergakademie, mit Empfehlungsschreiben der Kaiserlichen Akademie der Wissenschaften zu St. Petersburg.</p>
-<p>Anno 1835</p>
-<div style="break-after: page; page-break-after: always;"></div>
+<div class="titlepage">
+  <div class="tp-frame">
+    <p class="tp-eyebrow">Feldjournal</p>
+    <div class="tp-rule"></div>
+    <h1>Naturhistorische und geognostische Beobachtungen</h1>
+    <p class="tp-subtitle">angestellt während einer Reise<br>durch das europäische Russland</p>
+    <p class="tp-flourish">❦</p>
+    <p class="tp-author">Dr. Johann Krause</p>
+    <p class="tp-role">Doctor der Naturgeschichte</p>
+    <p class="tp-affil">Entsandt von der Freiberger Bergakademie,<br>mit Empfehlungsschreiben der Kaiserlichen<br>Akademie der Wissenschaften zu St. Petersburg.</p>
+    <div class="tp-rule"></div>
+    <p class="tp-year">Anno 1835</p>
+  </div>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<h2>Russische Akademie der Wissenschaften:</h2>
+<figure style="width:75%; margin-left:auto; margin-right:auto; margin-top:4mm;">
+  <img src="../графика/краузе_чиновник.png" alt="Beamter in der Kanzlei der Akademie">
+  <figcaption>Der Hofrat in der Kanzlei.</figcaption>
+</figure>
+<p class="margin-note">NB: Sammlung – ohne Echo.</p>
+<p style="margin-top:0mm;">Heute ward mir eine Audienz in der Kanzlei der Akademie der Wissenschaften zuteil, doch übertraf dieser Empfang alle Erwartungen – nicht durch Wohlwollen, sondern durch das gänzliche Fehlen desselben. Meine botanischen Aufsammlungen vermochten beim Beamten keinerlei Interesse zu erwecken; man wittert hier in jeglicher Vorwitzigkeit Spionage und in jedweder Gelehrsamkeit Freigeisterei.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<p>Der Hofrat gab mir unverhohlen zu verstehen, dass die vorzüglichste Tugend eines Naturforschers in Russland die Staatstreue sei. Mit gedämpfter Stimme erklärte er mir ohne Umschweife: Das Erscheinen „unstatthafter" Nachrichten im Druck drohe damit, dass man zur Vernehmung vorgeladen oder gar in Verwahrung genommen werde. Was genau als unstatthaft erachtet wird, lässt sich im Voraus schwerlich bestimmen, und darin scheint der ganze Zweck zu liegen. Von der Furcht vor Aufruhr ergriffen, sucht die hiesige Bürokratie die Naturkunde der polizeilichen Aufsicht zu unterwerfen; vom Forscher erwartet man daher lediglich Erklärungen über den „Staatsnutzen" und das getreue Befolgen der ministerialen Zirkulare.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<h2>In der russischen Provinz:</h2>
+<figure style="width:100%; margin-top:7mm;">
+  <img src="../графика/краузе_дороги.png" alt="Straßen in Russland">
+  <figcaption>Straßen in Russland, nach der Regenzeit.</figcaption>
+</figure>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<p>Aus der Reise habe ich eine unumstößliche Erkenntnis davongetragen: Wagenfedern sind hier ein gänzlich unbekannter Luxus. Bereits von der Zolleinnehmerei an zeigt sich die Fahrspur bis an die Radnabe vertieft, und nach ergiebigen Regenfgüssen verwandelt sich das Terrain in einen bodenlosen Morast, den man keineswegs grundlos als <em>Rasputiza</em> bezeichnet. Nach dreitägiger Passage schmerzen die Gebeine dergestalt, als wären sie aufs Neue traktiert worden. Dahingegen verdient die Tafel ein uneingeschränktes Lob: Einen derart vorzüglichen Gänsebraten nebst einer so köstlichen Fischsuppe hat man mir weder in Sachsen noch in Preußen kredenzt. Einziges Übel bleibt die gänzliche Unkenntnis jedweden Maßes beim Umtrunk: Der Wirt wähnt den Gast erst dann gebührend geehrt, wenn dieser weit über jedes vernünftige Bedürfnis hinaus zugesprochen hat.</p>
+<p class="diagonal">Eine Ablehnung wird als Kränkung gedeutet, eine Zusage als Anlass zu einem erneuten Becher.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
 <h2>Comportamentum anomalum (aus den Beobachtungen):</h2>
-<img src="../графика/краузе_рис1.png" alt="Krähe und Hofhund begegnen sich am Wegkreuz" style="float:left; width:34%; margin:0 4mm 3mm 0;">
-<p>Nr. 12. Eine Krähe und ein Hofhund, eine Viertelwerst voneinander entfernt, bewegten sich auf denselben Punkt am Rande des Reviers zu. Ich folgte beiden. Die Wege trafen sich. Eine höchst ungewöhnliche Sache.</p>
-<img src="../графика/краузе_рис9.png" alt="Journalseite mit Pflanzenskizze und Pfotenspuren" style="float:right; width:26%; margin:0 0 3mm 4mm;">
+<figure class="float-left" style="width:52%;margin-top:3mm;">
+  <img src="../графика/краузе_рис1.png" alt="Krähe und Hofhund begegnen sich am Wegkreuz">
+  <figcaption>Skizze zu Nr. 12: Krähe und Hofhund am Wegkreuz.</figcaption>
+</figure>
+<p style="margin-top:6mm;">Nr. 12. Eine Krähe und ein Hofhund, eine Viertelwerst voneinander entfernt, bewegten sich auf denselben Punkt am Rande des Reviers zu. Ich folgte beiden. Die Wege trafen sich. Eine höchst ungewöhnliche Sache.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure class="float-right" style="width:44%;margin-top:3mm;">
+  <img src="../графика/краузе_рис9.png" alt="Journalseite mit Pflanzenskizze und Pfotenspuren">
+  <figcaption>Skizze zu Nr. 19: Pfotenspuren, notiert.</figcaption>
+</figure>
+<p class="margin-note">NB: Liste s. separates Blatt.</p>
 <p>Nr. 19. Die Tiere betrachten die Menschen verschieden: die einen scheinen sie zu studieren, die anderen bemerken sie überhaupt nicht. Ich fertigte ein Verzeichnis jener Personen an, denen sich die Kreaturen bereitwillig nähern. Eine Regel finde ich nicht – doch vorhanden ist sie gewiss.</p>
-<p>Nr. 27. Kreaturen verschiedener Gattungen handeln übereinstimmend, wie von einer einzigen Absicht bewegt. Weder Furcht noch Hunger noch Brunft erklären dies. Sie fressen nicht, sie spielen nicht. Sie warten.</p>
-<img src="../графика/краузе_рис4.png" alt="Heulender Wolf vor seltsamem Schein über der Schlucht" style="float:left; width:36%; margin:0 4mm 3mm 0;">
-<p>Nr. 34. In dem Revier, das die Leute Wedmina Balka nennen (dt. etwa: Hexenschlucht), zeigt sich nachts ein gleichmässiger, azurblauer Schein, begleitet von anhaltendem Dröhnen. Die Quelle konnte ich nicht ermitteln: näher heranzukommen gelang nicht – die Gegenwart von Wölfen verriet sich durch deren Geheul; die Hunde, die mich begleiteten, legten sich zu Boden und gingen nicht weiter.</p>
-<img src="../графика/краузе_рис7.png" alt="Drei Herren beim Tee mit dem Samowar" style="float:right; width:34%; margin:0 0 3mm 4mm;">
-<p><em>(am Rand, mit anderer Tinte, eigene Rubrik Antropologia domestica – Beobachtungen über die Sitten des hiesigen Landadels):</em> Die hiesigen Gutsherren empfangen den Gast stets auf dieselbe Weise – mit Tee, Gesprächen über die Ernteaussichten und Klagen über den Nachbarn; von dem Gegenstand, der sie eigentlich beschäftigt, kein Wort, ehe nicht die dritte Tasse geleert ist. Löblich: eine Zurückhaltung, die eines Diplomaten würdig wäre – eine solche habe ich nicht immer bei Diplomaten selbst angetroffen.</p>
-<img src="../графика/краузе_рис3.png" alt="Bauer Dimitri, Porträtskizze" style="float:right; width:20%; margin:0 0 2mm 4mm;">
-<img src="../графика/краузе_рис2.png" alt="Bauer geht in regelmässigen Kreisen über den Hof" style="float:left; width:32%; margin:0 4mm 3mm 0;">
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<p>Nr. 27. Kreaturen verschiedener Gattungen handeln übereinstimmend, wie von einer einzigen Absicht bewegt. Weder Furcht noch Hunger noch Brunft erklären dies. Sie fressen nicht, sie spielen nicht.</p>
+<p class="diagonal">Sie warten.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure class="float-left" style="width:50%;">
+  <img src="../графика/краузе_рис4.png" alt="Heulender Wolf vor seltsamem Schein über der Schlucht">
+  <figcaption>Skizze zu Nr. 34: Schein über der Wedmina&nbsp;Balka.</figcaption>
+</figure>
+<p class="margin-note">NB: Hunde – Furcht, kein Hunger.</p>
+<p>Nr. 34. In dem Revier, das die Leute Wedmina&nbsp;Balka nennen (dt. etwa: Hexenschlucht), zeigt sich nachts ein gleichmässiger, azurblauer Schein, begleitet von anhaltendem Dröhnen. Die Quelle konnte ich nicht ermitteln: näher heranzukommen gelang nicht – die Gegenwart von Wölfen verriet sich durch deren Geheul; die Hunde, die mich begleiteten, legten sich zu Boden und gingen nicht weiter.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure class="float-right" style="width:46%;margin-top:1mm;">
+  <img src="../графика/краузе_рис7.png" alt="Drei Herren beim Tee mit dem Samowar">
+  <figcaption>Skizze: Herren beim Tee, Wartezeit bis zur dritten Tasse.</figcaption>
+</figure>
+<p class="aside"><em>(am Rand, mit anderer Tinte, eigene Rubrik Antropologia domestica – Beobachtungen über die Sitten des hiesigen Landadels):</em> Die hiesigen Gutsherren empfangen den Gast stets auf dieselbe Weise – mit Tee, Gesprächen über die Ernteaussichten und Klagen über den Nachbarn; von dem Gegenstand, der sie eigentlich beschäftigt, kein Wort, ehe nicht die dritte Tasse geleert ist. Löblich: eine Zurückhaltung, die eines Diplomaten würdig wäre – eine solche habe ich nicht immer bei Diplomaten selbst angetroffen.</p>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure class="float-left" style="width:38%;">
+  <img src="../графика/краузе_рис3.png" alt="Bauer Dimitri, Porträtskizze">
+  <figcaption>Bauer Dimitri, Porträtskizze.</figcaption>
+</figure>
+<p class="margin-note">
+  <img src="../графика/краузе_рис2.png" alt="Bauer geht in regelmässigen Kreisen über den Hof" style="width:100%; display:block; margin-bottom:1mm;">
+  Bahnen im Hof, schematisch.
+</p>
 <p>Nr. 38. Casus singularis: kein kleines Tier, sondern ein Mensch. Der Bauer Dimitri, bis zur Besinnungslosigkeit betrunken, verbrachte die Nacht im Wolchi Log (Wolfsschlucht). Am Morgen körperlich gesund, doch verändert: der Blick leer, der Gesichtsausdruck beständig sanft-selig, an die Nacht erinnert er sich an nichts. Er ging über den Hof in regelmässigen Bahnen, gleichsam nach Figuren – ähnlich den Beobachtungen Nr. 12–27 an Tieren. Nach einem Tag verschwand es spurlos. Ich ziehe keinen Schluss: die Medizin ist nicht mein Fach. Ich vermerke nur die Übereinstimmung: dasselbe Revier – und die Veränderung trat nach einer Bewusstlosigkeit darin ein.</p>
-<h2>Einzelne Blätter, dem Journal beigelegt (in anderer Ordnung geschrieben, mit Abkürzungen):</h2>
-<img src="../графика/краузе_рис6.png" alt="Bündel gefalteter Feldnotizen und Karten" style="float:left; width:28%; margin:0 4mm 3mm 0;">
-<img src="../графика/краузе_рис8.png" alt="Lose Blätter mit Karte und Bohrturm-Skizze" style="float:right; width:30%; margin:0 0 3mm 4mm;">
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<h2 style="margin-top:-2mm;">Einzelne Blätter, dem Journal beigelegt (in anderer Ordnung geschrieben, mit Abkürzungen):</h2>
+<figure style="width:60%; margin-left:auto; margin-right:auto;">
+  <img src="../графика/краузе_рис6.png" alt="Bündel gefalteter Feldnotizen und Karten">
+  <figcaption>Bündel der beigelegten Blätter.</figcaption>
+</figure>
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure class="float-right" style="width:48%; margin-top:-1mm;">
+  <img src="../графика/краузе_рис8.png" alt="Lose Blätter mit Karte und Bohrturm-Skizze">
+  <figcaption>Lose Blätter: Kartenskizze mit Bohrturm.</figcaption>
+</figure>
 <p>Das Flözausgehende auf den Ländereien des S. – das reichste, das ich im europäischen Russland gesehen habe. Die Lagerstätte liegt flach, die Ölqualität ist hoch; die Konzession amortisiert sich in drei Jahren. An die Direktion der Compagnie: Ich empfehle dringend den Erwerb der Rechte, ehe der Ort bekannt wird. Der hiesige Fabrikant ahnt den wahren Wert nicht.</p>
-<img src="../графика/краузе_рис5.png" alt="Landschaft mit Bohrturm und Förderanlage" style="width:100%; margin:3mm 0;">
+</div>
+<div class="pagebreak"></div>
+
+<div class="entry">
+<figure style="width:100%;">
+  <img src="../графика/краузе_рис5.png" alt="Landschaft mit Bohrturm und Förderanlage">
+  <figcaption>Landschaft mit Bohrturm und Förderanlage.</figcaption>
+</figure>
+<p class="diagonal">Ende der Auszüge.</p>
+</div>
+
+<div class="pagebreak"><div class="entry"></div></div>
+<div class="pagebreak"><div class="entry"></div></div>
+<div class="pagebreak"><div class="entry"></div></div>
+
   </div>
 </body>
 
