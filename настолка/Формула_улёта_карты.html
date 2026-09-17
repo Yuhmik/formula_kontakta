@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <title>Формула улёта – карты</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      background: #fff;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #1a1a1a;
+      font-size: 11pt;
+      line-height: 1.35;
+    }
+
+    .sheet {
+      max-width: 190mm;
+      margin: 0 auto;
+    }
+
+    @media screen {
+      body {
+        padding: 10mm;
+        background: #d8cdb4;
+      }
+
+      .sheet {
+        background: #fff;
+      }
+
+      .page1,
+      .page2,
+      .page3 {
+        box-shadow: 0 2mm 8mm rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    /* ---------- Страница 1: карты действия, 2 колонки ---------- */
+
+    .page1,
+    .page2,
+    .page3 {
+      position: relative;
+    }
+
+    /* Вертикальная линия ровно по центру листа (не по границе ячейки грида -
+       зазор между колонками шире, чем нужно для этого). */
+    .page1::before,
+    .page2::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 1pt dashed #999;
+    }
+
+    .page2 {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* column-gap = 2 × поле страницы (@page margin), тогда отступ от края
+         листа до текста первой колонки равен отступу от центра листа до
+         текста второй колонки. */
+      gap: 0 20mm;
+    }
+
+    .card {
+      position: relative;
+      padding: 8mm 9mm;
+      border-bottom: 1pt dashed #999;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      min-height: 55mm;
+    }
+
+    h1 {
+      font-size: 13.5pt;
+      font-weight: 700;
+      margin: 0 14mm 3mm 0;
+    }
+
+    p {
+      margin-bottom: 2mm;
+    }
+
+    p.hint {
+      font-size: 9pt;
+      font-style: italic;
+      color: #555;
+    }
+
+    /* ---------- Страница 2: колода пришельцев (7 + 3), 2 колонки × 5 ---------- */
+
+    .alien {
+      /* Текст короткий - карточка ниже, чем у карт действия, чтобы 5 рядов
+         поместились на одном листе. */
+      min-height: 40mm;
+    }
+
+    .alien h1 {
+      color: #333;
+    }
+
+    /* ---------- Страница 3: картинка на весь лист ---------- */
+    /* Тот же приём, что у страниц 1-2: страница внутри .sheet (190мм), и
+       та же печатная высота листа (297мм - 2×10мм поля @page = 277мм). */
+    .page3 {
+      break-before: page;
+      page-break-before: always;
+      height: 297mm;
+      overflow: hidden;
+      /* Центрируем через flexbox - без ручной арифметики через margin,
+         браузер сам ставит картинку точно в центр по обеим осям. */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page3 img {
+      /* Размеры даны "до поворота" - после rotate(90deg) сторона 277×190
+         визуально становится 190×277, то есть ровно размером области
+         страницы (ширина .sheet × печатная высота). */
+      width: 277mm;
+      object-fit: fill;
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sheet">
+
+    <div class="page1">
+      <div class="grid">
+
+        <div class="card">
+          <h1>Обыск</h1>
+          <p class="hint">Вскрывшись по кругу, назови другого игрока.</p>
+          <p>Если он в эту фазу не сыграл «Взятку», забери у него 1000.</p>
+        </div>
+
+        <div class="card">
+          <h1>Смута</h1>
+          <p class="hint">Вскрывшись по кругу, назови другого игрока.</p>
+          <p>Если он в эту фазу сыграл «Промысел», его эффект не срабатывает: не получит ни денег, ни бочки.</p>
+        </div>
+
+        <div class="card">
+          <h1>Взятка</h1>
+          <p>В эту фазу ты защищён от «Обыска», направленного на тебя.</p>
+          <p>Если никто не целился – карта потрачена впустую.</p>
+        </div>
+
+        <div class="card">
+          <h1>Промысел</h1>
+          <p class="hint">Вскрывшись по кругу, назови выбор: деньги или бочка (и какая – нефть/самогон).</p>
+          <p>Деньгами – получи 1000.<br>Бочкой – возьми 1 в свой запас.</p>
+        </div>
+
+        <div class="card">
+          <h1>Оброк</h1>
+          <p>Получи гарантированно 500.</p>
+          <p>Не подвержен «Смуте».</p>
+        </div>
+
+        <div class="card">
+          <h1>Волчий Лог</h1>
+          <p>Если в запасе есть бочка – довези одну до трека корабля.</p>
+          <p>Если бочек нет – вытяни карту из колоды пришельцев.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page2">
+      <div class="grid">
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Блуждание в тумане</h1>
+          <p>Вы обошли Волчий Лог<br>и ничего не нашли.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Артефакт пришельцев</h1>
+          <p>Вам дали диковинную вещицу.</p>
+          <p>Получи 1000. Карта уходит в отбой.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Артефакт пришельцев</h1>
+          <p>Вам дали диковинную вещицу.</p>
+          <p>Получи 1000. Карта уходит в отбой.</p>
+        </div>
+
+        <div class="card alien">
+          <h1>Артефакт пришельцев</h1>
+          <p>Вам дали диковинную вещицу.</p>
+          <p>Получи 1000. Карта уходит в отбой.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page3">
+      <img src="формула_улёта.png" alt="Формула улёта">
+    </div>
+
+  </div>
+</body>
+
+</html>
