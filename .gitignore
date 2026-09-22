@@ -8,3 +8,5 @@
 /.claude/skills/generate-cards/__pycache__/*
 /.claude/skills/generate-roles/__pycache__/*
 /настолка/__pycache__/
+/public/letters/*.pdf
+/фото/*
